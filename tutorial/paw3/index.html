@@ -1,0 +1,5427 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="Abinit documentation">
+      
+      
+        <link rel="canonical" href="https://docs.abinit.org/tutorial/paw3/">
+      
+      
+        <meta name="author" content="The Abinit group">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../images/favicon.ico">
+      <meta name="generator" content="mkdocs-0.17.5, mkdocs-material-2.6.6">
+    
+    
+      
+        <title>PAW3 - abinit</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.78aab2dc.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.6079476c.css">
+      
+    
+    
+    
+      <script src="../../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+
+    <!-- Jquery from Google CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Load Jquery UI -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <!-- Handle jQuery plugin naming conflict between jQuery UI and Bootstrap 
+    https://stackoverflow.com/questions/13731400/jqueryui-tooltips-are-competing-with-twitter-bootstrap
+    -->
+    <script>
+      $.widget.bridge('uibutton', $.ui.button);
+      $.widget.bridge('uitooltip', $.ui.tooltip);
+    </script>
+
+    <!--
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/pepper-grinder/jquery-ui.css">
+    -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <!-- Bootstrap theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.0/build/css/themes/bootstrap.min.css"/>
+
+    <!-- Bootstrap http://getbootstrap.com/getting-started/ -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" 
+    integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" 
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous">
+    </script>
+
+    <!-- font-awesome -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    
+
+    <!--Pace support. http://github.hubspot.com/pace/ -->
+    <script>
+        paceOptions = {
+            ajax: true,      // disabled
+            document: true,  // activated
+            eventLag: false  // disabled
+            //target: 'article'
+            //elements: {selectors: ['.my-page']}
+        };
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/white/pace-theme-big-counter.min.css" />
+    <!--
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/white/pace-theme-bounce.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-corner-indicator.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-flat-top.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-loading-bar.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-center-atom.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-flash.min.css" />
+    -->
+
+    <!-- MathJax support
+    <script type="text/javascript" async 
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script> 
+    -->
+    <!--
+    This is compatible with plotly.
+    -->
+    <script type="text/javascript" async 
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_SVG">
+    </script> 
+
+    <!--
+    Configure MathJax to produce automatic equation numbers http://docs.mathjax.org/en/latest/tex.html
+    -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        //jax: ["input/TeX","output/HTML-CSS"],
+        //tex2jax: {inlineMath: [['$','$']]},
+        //displayAlign: "center",
+        TeX: {
+            equationNumbers: { autoNumber: "AMS" },
+            extensions: ["AMSmath.js", "boldsymbol.js"],
+            Macros: {
+                "*": "{\\dagger}",
+                "ra": "{\\rangle}",
+                "la": "{\\langle}",
+                // Workaround for bm package. See https://github.com/mathjax/MathJax/issues/1219
+                bm: ["{\\boldsymbol #1}",1],
+                // Mathcal symbols
+                mcL: "{\\mathcal{L}}",
+                mcG: "{\\mathcal{G}}",
+                mcR: "{\\mathcal{R}}",
+                mcS: "{\\mathcal{S}}",
+                mcC: "{\\mathcal{C}}",
+                mcO: "{\\mathcal{O}}",
+                // Acronyms
+                KS: "{\\text{KS}}",
+                eph: "{\\text{e-ph}}",
+                ee: "{\\text{e-e}}",
+                phph: "{\\text{ph-ph}}",
+                FM: "{\\text{FM}}",
+                DW: "{\\text{DW}}",
+                QP: "{\\text{QP}}",
+                BZ: "{\\text{BZ}}",
+                sign: "{\\text{sign}}",
+                xc: "{\\text{xc}}",
+                tchi: "{\\tilde\\chi}",
+                // Symbols commonly used (k-points, eigenvalues ...)
+                rr: "{\\bf r}",
+                RR: "{\\bf R}",
+                tt: "{\\bf t}",
+                GG: "{\\bf G}",
+                kk: "{\\bf k}",
+                qq: "{\\bf q}",
+                kq: "{\\kk + \\qq}",
+                qG: "{\\bf q + G}",
+                kG: "{\\bf k + G}",
+                kmq: "{\\kk - \\qq}",
+                kpq: "{\\kk + \\qq}",
+                kpG: "{\\kk + \\GG}",
+                qpG: "{\\qq + \\GG}",
+                nk: "{n \\kk}",
+                enk: "{\\varepsilon_\\nk}",
+                emkq: "{\\varepsilon_{m\\kk+\\qq}}",
+                qnu: "{\\qq \\nu}",
+                wqnu: "{\\omega_{\\qnu}}",
+                vnk: "{\\mathbf{v}_{n\\kk}}",
+                vmkq: "{\\mathbf{v}_{m\\kk+\\qq}}",
+                vnka: "{\\mathrm{v}_{n\\kk,\\alpha}}",
+                vnkb: "{\\mathrm{v}_{n\\kk,\\beta}}",
+                ef: "{\\varepsilon_F}",
+                // EPH quantities
+                gkkp: "{g_{mn\\nu}(\\kk,\\qq)}",
+                gkq: "{g_{mn\\nu}(\\kk,\\qq)}",
+                //\newcommand{\gkkpL}{g_{mn\nu}^\Lc(\kb,\qb)}
+                // Many-body theory
+                Go: "{G_0}",
+                Wo: "{W_0}",
+                Ueff: "{U_{\\text{eff}}}",
+                // Greek symbols + tilde version
+                ee: "{\\epsilon}",
+                tee: "{\\tilde{\\epsilon}}",
+                ww: "{\\omega}",
+                tww: "{\\tilde\\omega}",
+                dd: "{\\,\\text{d}}",
+                vxc: "{v_\\xc}",
+                // symrel
+                Ri: "{\\mcR^{-1}}",
+                Rit: "{\\mcR^{-1\\tau}}",
+                // symrec
+                Si: "{\\mcS^{-1}}}",
+                Sit: "{\\Si^\\tau}}",
+                // partial and functional derivative.
+                PDER: ["{\\dfrac{\\partial #1}{\\partial #2}}", 2],
+                FDER: ["{\\dfrac{\\delta #1}{\\delta #2}}", 2],
+                // PAW
+                tPsi: "{\\tilde\\Psi}",
+                tpsi: "{\\tilde\\psi}",
+                tPhi: "{\\tilde\\Phi}",
+                tphi: "{\\tilde\\phi}",
+                tprj: "{\\tilde p}"
+            }
+          }
+      });
+    </script>
+
+    <!-- See http://docs.mathjax.org/en/latest/start.html 
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        extensions: ["tex2jax.js", "MathMenu.js", "MathZoom.js"],
+        jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML],
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true
+        },
+        "HTML-CSS": { availableFonts: ["TeX"] }
+      });
+    </script>
+    -->
+
+    
+    
+    
+
+    <!-- Introjs for Guided Tour -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/intro.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.7.0/introjs.min.css" />
+
+    <!-- Load fonts used for input variables -->
+    <!--
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
+    -->
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+
+    
+      <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+      
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    
+      <link rel="stylesheet" href="../../css/extra.css">
+    
+      <link rel="stylesheet" href="../../css/gallery.css">
+    
+      <link rel="stylesheet" href="../../css/my_codehilite.css">
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="deep-orange" data-md-color-accent="deep-orange">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
+    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
+    
+      <a href="#third-tutorial-on-the-projector-augmented-wave-paw-technique" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://www.abinit.org" title="abinit" class="md-header-nav__button md-logo">
+          
+            <img src="../../images/logo-abinit-2015.png" width="48" height="48">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <span class="md-flex__ellipsis md-header-nav__title">
+          
+            
+              
+                <span class="md-header-nav__parent">
+                  Tutorial
+                </span>
+              
+                <span class="md-header-nav__parent">
+                  PAW
+                </span>
+              
+            
+            PAW3
+          
+        </span>
+      </div>
+      <!-- Guided Tour with introjs. Add glow effect to button only if homepage -->
+      <div class="md-flex__cell md-flex__cell--shrink">
+           
+          
+          <a href="#" class="btn btn-xs btn-default  " id="guided-tour-button" title="Guided Tour" 
+              onclick="abidocs_guidedtour()">
+           <span class="fa fa-info-circle"></span></a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/abinit/abinit/" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      github-abinit
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+      <div class="md-flex__cell md-flex__cell--shrink" id="previous_published_versions">
+        <div class="dropdown">
+          <button class="btn btn-basic btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+            9.2.2
+          <span class="caret"></span></button>
+          <ul class="dropdown-menu">
+            
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../.." title="User Guide" class="md-tabs__link">
+          User Guide
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../topics/features/" title="Topics" class="md-tabs__link">
+          Topics
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../variables/" title="Variables" class="md-tabs__link">
+          Variables
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../" title="Tutorial" class="md-tabs__link md-tabs__link--active">
+          Tutorial
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../theory/geometry/" title="Theory" class="md-tabs__link">
+          Theory
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../developers/git_and_gitlab/" title="Developers" class="md-tabs__link">
+          Developers
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../about/release-notes/" title="About" class="md-tabs__link">
+          About
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="drawer">
+    <span class="md-nav__button md-logo">
+      
+        <img src="../../images/logo-abinit-2015.png" width="24" height="24">
+      
+    </span>
+    abinit
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/abinit/abinit/" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      github-abinit
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-1" type="checkbox" id="nav-1">
+    
+    <label class="md-nav__link" for="nav-1">
+      User Guide
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-1">
+        User Guide
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="NewUser" class="md-nav__link">
+      NewUser
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guide/abinit/" title="Abinit" class="md-nav__link">
+      Abinit
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guide/aim/" title="Aim" class="md-nav__link">
+      Aim
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guide/anaddb/" title="Anaddb" class="md-nav__link">
+      Anaddb
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guide/cut3d/" title="Cut3d" class="md-nav__link">
+      Cut3d
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guide/fold2bloch/" title="Fold2Bloch" class="md-nav__link">
+      Fold2Bloch
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guide/mrgddb/" title="Mrgddb" class="md-nav__link">
+      Mrgddb
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guide/mrgscr/" title="Mrgscr" class="md-nav__link">
+      Mrgscr
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guide/multibinit/" title="Multibinit" class="md-nav__link">
+      Multibinit
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guide/optic/" title="Optic" class="md-nav__link">
+      Optic
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guide/respfn/" title="Respfn" class="md-nav__link">
+      Respfn
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guide/spacegroup/" title="Spacegroup" class="md-nav__link">
+      Spacegroup
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guide/a-TDEP/" title="a-TDEP" class="md-nav__link">
+      a-TDEP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-1-14" type="checkbox" id="nav-1-14">
+    
+    <label class="md-nav__link" for="nav-1-14">
+      Installation
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-1-14">
+        Installation
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../installation/" title="HowTo" class="md-nav__link">
+      HowTo
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../INSTALL_MacOS/" title="MacOS" class="md-nav__link">
+      MacOS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../INSTALL_Ubuntu/" title="Ubuntu" class="md-nav__link">
+      Ubuntu
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../INSTALL_CentOS/" title="CentOS" class="md-nav__link">
+      CentOS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../INSTALL_EasyBuild/" title="EasyBuild" class="md-nav__link">
+      EasyBuild
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../INSTALL_gpu/" title="GPUs" class="md-nav__link">
+      GPUs
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Topics
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Topics
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/features/" title="Features" class="md-nav__link">
+      Features
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/" title="Topic List" class="md-nav__link">
+      Topic List
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/Abipy/" title="Abipy" class="md-nav__link">
+      Abipy
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/APPA/" title="APPA" class="md-nav__link">
+      APPA
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/Artificial/" title="Artificial" class="md-nav__link">
+      Artificial
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/AtomManipulator/" title="AtomManipulator" class="md-nav__link">
+      AtomManipulator
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/AtomTypes/" title="AtomTypes" class="md-nav__link">
+      AtomTypes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/Bader/" title="Bader" class="md-nav__link">
+      Bader
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/Band2eps/" title="Band2eps" class="md-nav__link">
+      Band2eps
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/Berry/" title="Berry" class="md-nav__link">
+      Berry
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/BandOcc/" title="BandOcc" class="md-nav__link">
+      BandOcc
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/BSE/" title="BSE" class="md-nav__link">
+      BSE
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/BoundingProcess/" title="BoundingProcess" class="md-nav__link">
+      BoundingProcess
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/ConstrainedDFT/" title="ConstrainedDFT" class="md-nav__link">
+      ConstrainedDFT
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/ConstrainedPol/" title="ConstrainedPol" class="md-nav__link">
+      ConstrainedPol
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/Control/" title="Control" class="md-nav__link">
+      Control
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/Coulomb/" title="Coulomb" class="md-nav__link">
+      Coulomb
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/CrossingBarriers/" title="CrossingBarriers" class="md-nav__link">
+      CrossingBarriers
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/CRPA/" title="CRPA" class="md-nav__link">
+      CRPA
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/crystal/" title="Crystal" class="md-nav__link">
+      Crystal
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/DFT+U/" title="DFT+U" class="md-nav__link">
+      DFT+U
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/DeltaSCF/" title="DeltaSCF" class="md-nav__link">
+      DeltaSCF
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/DensityPotential/" title="DensityPotential" class="md-nav__link">
+      DensityPotential
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/Dev/" title="Dev" class="md-nav__link">
+      Dev
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/DFPT/" title="DFPT" class="md-nav__link">
+      DFPT
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/DMFT/" title="DMFT" class="md-nav__link">
+      DMFT
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/DynamicsMultibinit/" title="DynamicsMultibinit" class="md-nav__link">
+      DynamicsMultibinit
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/EffectiveMass/" title="EffectiveMass" class="md-nav__link">
+      EffectiveMass
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/EFG/" title="EFG" class="md-nav__link">
+      EFG
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/Elastic/" title="Elastic" class="md-nav__link">
+      Elastic
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/ElPhonInt/" title="ElPhonInt" class="md-nav__link">
+      ElPhonInt
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/ElPhonTransport/" title="ElPhonTransport" class="md-nav__link">
+      ElPhonTransport
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/ElecDOS/" title="ElecDOS" class="md-nav__link">
+      ElecDOS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/ElecBandStructure/" title="ElecBandStructure" class="md-nav__link">
+      ElecBandStructure
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/FileFormats/" title="FileFormats" class="md-nav__link">
+      FileFormats
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/FitProcess/" title="FitProcess" class="md-nav__link">
+      FitProcess
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/ForcesStresses/" title="ForcesStresses" class="md-nav__link">
+      ForcesStresses
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/FrequencyMeshMBPT/" title="FrequencyMeshMBPT" class="md-nav__link">
+      FrequencyMeshMBPT
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/GeoConstraints/" title="GeoConstraints" class="md-nav__link">
+      GeoConstraints
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/GeoOpt/" title="GeoOpt" class="md-nav__link">
+      GeoOpt
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/Git/" title="Git" class="md-nav__link">
+      Git
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/GSintroduction/" title="GSintroduction" class="md-nav__link">
+      GSintroduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/GW/" title="GW" class="md-nav__link">
+      GW
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/GWls/" title="GWls" class="md-nav__link">
+      GWls
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/Hybrids/" title="Hybrids" class="md-nav__link">
+      Hybrids
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/k-points/" title="K points" class="md-nav__link">
+      K points
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/LatticeModel/" title="LatticeModel" class="md-nav__link">
+      LatticeModel
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/LDAminushalf/" title="LDAminushalf" class="md-nav__link">
+      LDAminushalf
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/LOTF/" title="LOTF" class="md-nav__link">
+      LOTF
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/longwave/" title="Longwave" class="md-nav__link">
+      Longwave
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/Macroave/" title="Macroave" class="md-nav__link">
+      Macroave
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/MagField/" title="MagField" class="md-nav__link">
+      MagField
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/MagMom/" title="MagMom" class="md-nav__link">
+      MagMom
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/MolecularDynamics/" title="MolecularDynamics" class="md-nav__link">
+      MolecularDynamics
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/multidtset/" title="Multidtset" class="md-nav__link">
+      Multidtset
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/nonlinear/" title="Nonlinear" class="md-nav__link">
+      Nonlinear
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/Optic/" title="Optic" class="md-nav__link">
+      Optic
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/Output/" title="Output" class="md-nav__link">
+      Output
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/parallelism/" title="Parallelism" class="md-nav__link">
+      Parallelism
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/PAW/" title="PAW" class="md-nav__link">
+      PAW
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/PIMD/" title="PIMD" class="md-nav__link">
+      PIMD
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/Planewaves/" title="Planewaves" class="md-nav__link">
+      Planewaves
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/Phonons/" title="Phonons" class="md-nav__link">
+      Phonons
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/PhononBands/" title="PhononBands" class="md-nav__link">
+      PhononBands
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/PhononWidth/" title="PhononWidth" class="md-nav__link">
+      PhononWidth
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/PortabilityNonRegression/" title="PortabilityNonRegression" class="md-nav__link">
+      PortabilityNonRegression
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/positron/" title="Positron" class="md-nav__link">
+      Positron
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/printing/" title="Printing" class="md-nav__link">
+      Printing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/PseudosPAW/" title="PseudosPAW" class="md-nav__link">
+      PseudosPAW
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/q-points/" title="Q points" class="md-nav__link">
+      Q points
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/RandStopPow/" title="RandStopPow" class="md-nav__link">
+      RandStopPow
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/Recursion/" title="Recursion" class="md-nav__link">
+      Recursion
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/RPACorrEn/" title="RPACorrEn" class="md-nav__link">
+      RPACorrEn
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/SCFControl/" title="SCFControl" class="md-nav__link">
+      SCFControl
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/SCFAlgorithms/" title="SCFAlgorithms" class="md-nav__link">
+      SCFAlgorithms
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/SelfEnergy/" title="SelfEnergy" class="md-nav__link">
+      SelfEnergy
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/SmartSymm/" title="SmartSymm" class="md-nav__link">
+      SmartSymm
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/spinpolarisation/" title="Spinpolarisation" class="md-nav__link">
+      Spinpolarisation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/SpinDynamicsMultibinit/" title="SpinDynamicsMultibinit" class="md-nav__link">
+      SpinDynamicsMultibinit
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/STM/" title="STM" class="md-nav__link">
+      STM
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/Susceptibility/" title="Susceptibility" class="md-nav__link">
+      Susceptibility
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/TDDFT/" title="TDDFT" class="md-nav__link">
+      TDDFT
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/a-TDEP/" title="a TDEP" class="md-nav__link">
+      a TDEP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/TDepES/" title="TDepES" class="md-nav__link">
+      TDepES
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/Temperature/" title="Temperature" class="md-nav__link">
+      Temperature
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/TransPath/" title="TransPath" class="md-nav__link">
+      TransPath
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/TuningSpeed/" title="TuningSpeed" class="md-nav__link">
+      TuningSpeed
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/Unfolding/" title="Unfolding" class="md-nav__link">
+      Unfolding
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/UnitCell/" title="UnitCell" class="md-nav__link">
+      UnitCell
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/vdw/" title="Vdw" class="md-nav__link">
+      Vdw
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/Verification/" title="Verification" class="md-nav__link">
+      Verification
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/Wannier/" title="Wannier" class="md-nav__link">
+      Wannier
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/Wavelets/" title="Wavelets" class="md-nav__link">
+      Wavelets
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/xc/" title="Xc" class="md-nav__link">
+      Xc
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../topics/external_resources/" title="External Resources" class="md-nav__link">
+      External Resources
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Variables
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Variables
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../variables/" title="All Variables" class="md-nav__link">
+      All Variables
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-2" type="checkbox" id="nav-3-2">
+    
+    <label class="md-nav__link" for="nav-3-2">
+      Abinit
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-2">
+        Abinit
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../variables/basic/" title="Basic" class="md-nav__link">
+      Basic
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../variables/bse/" title="Bethe-Salpeter" class="md-nav__link">
+      Bethe-Salpeter
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../variables/dev/" title="Developers" class="md-nav__link">
+      Developers
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../variables/dmft/" title="DMFT" class="md-nav__link">
+      DMFT
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../variables/eph/" title="Electron-Phonon" class="md-nav__link">
+      Electron-Phonon
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../variables/ffield/" title="Varff" class="md-nav__link">
+      Varff
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../variables/files/" title="File-handling" class="md-nav__link">
+      File-handling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../variables/geo/" title="Geometry" class="md-nav__link">
+      Geometry
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../variables/gstate/" title="Ground-State" class="md-nav__link">
+      Ground-State
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../variables/gw/" title="GW" class="md-nav__link">
+      GW
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../variables/internal/" title="Internal" class="md-nav__link">
+      Internal
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../variables/paral/" title="Parallelism" class="md-nav__link">
+      Parallelism
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../variables/paw/" title="PAW" class="md-nav__link">
+      PAW
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../variables/dfpt/" title="DFPT" class="md-nav__link">
+      DFPT
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../variables/rlx/" title="Relaxation" class="md-nav__link">
+      Relaxation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../variables/vdw/" title="VdW" class="md-nav__link">
+      VdW
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../variables/w90/" title="Wannier90" class="md-nav__link">
+      Wannier90
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../variables/anaddb/" title="Anaddb" class="md-nav__link">
+      Anaddb
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../variables/multibinit/" title="Multibinit" class="md-nav__link">
+      Multibinit
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../variables/optic/" title="Optic" class="md-nav__link">
+      Optic
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../variables/atdep/" title="a-TDEP" class="md-nav__link">
+      a-TDEP
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../variables/aim/" title="Aim" class="md-nav__link">
+      Aim
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../variables/external_parameters/" title="External Parameters" class="md-nav__link">
+      External Parameters
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../variables/varset_stats/" title="Statistics" class="md-nav__link">
+      Statistics
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
+    
+    <label class="md-nav__link" for="nav-4">
+      Tutorial
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Tutorial
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../compilation/" title="Building Abinit" class="md-nav__link">
+      Building Abinit
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-3" type="checkbox" id="nav-4-3">
+    
+    <label class="md-nav__link" for="nav-4-3">
+      Base Tutorials
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-3">
+        Base Tutorials
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../base1/" title="Base1" class="md-nav__link">
+      Base1
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../base2/" title="Base2" class="md-nav__link">
+      Base2
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../base3/" title="Base3" class="md-nav__link">
+      Base3
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../base4/" title="Base4" class="md-nav__link">
+      Base4
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../spin/" title="Spin" class="md-nav__link">
+      Spin
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-4" type="checkbox" id="nav-4-4" checked>
+    
+    <label class="md-nav__link" for="nav-4-4">
+      PAW
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-4">
+        PAW
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../paw1/" title="PAW1" class="md-nav__link">
+      PAW1
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../paw2/" title="PAW2" class="md-nav__link">
+      PAW2
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        PAW3
+      </label>
+    
+    <a href="./" title="PAW3" class="md-nav__link md-nav__link--active">
+      PAW3
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#testing-paw-datasets-against-an-all-electron-code" title="Testing PAW datasets against an all-electron code" class="md-nav__link">
+    Testing PAW datasets against an all-electron code
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-introduction-the-quantities-to-be-compared" title="1. Introduction - the quantities to be compared" class="md-nav__link">
+    1. Introduction - the quantities to be compared
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-prerequisites-code-components-and-scripts" title="2. Prerequisites, code components and scripts" class="md-nav__link">
+    2. Prerequisites, code components and scripts
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-carbon-diamond" title="3. Carbon (diamond)" class="md-nav__link">
+    3. Carbon (diamond)
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-carbon-a-simple-datatset" title="3.1. Carbon - a simple datatset" class="md-nav__link">
+    3.1. Carbon - a simple datatset
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-carbon-calculating-the-equilibrium-lattice-parameter" title="3.2. Carbon - calculating the equilibrium lattice parameter" class="md-nav__link">
+    3.2. Carbon - calculating the equilibrium lattice parameter
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-carbon-the-all-electron-calculation" title="3.3. Carbon - the all-electron calculation" class="md-nav__link">
+    3.3. Carbon - the all-electron calculation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-carbon-improving-the-dataset" title="3.4. Carbon - improving the dataset" class="md-nav__link">
+    3.4. Carbon - improving the dataset
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-magnesium-dealing-with-the-fermi-energy-of-a-metallic-system" title="4. Magnesium - dealing with the Fermi energy of a metallic system" class="md-nav__link">
+    4. Magnesium - dealing with the Fermi energy of a metallic system
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-magnesium-the-all-electron-calculation" title="4.1. Magnesium - The all-electron calculation" class="md-nav__link">
+    4.1. Magnesium - The all-electron calculation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-magnesium-the-abinit-calculation" title="4.2. Magnesium - The abinit calculation" class="md-nav__link">
+    4.2. Magnesium - The abinit calculation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-paw-datasets-for-gw-calculations" title="5. PAW datasets for GW calculations" class="md-nav__link">
+    5. PAW datasets for GW calculations
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-5" type="checkbox" id="nav-4-5">
+    
+    <label class="md-nav__link" for="nav-4-5">
+      DFT_PLUS_U
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-5">
+        DFT_PLUS_U
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../dftu/" title="Dftu" class="md-nav__link">
+      Dftu
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../udet/" title="Udet" class="md-nav__link">
+      Udet
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ucalc_crpa/" title="Ucalc crpa" class="md-nav__link">
+      Ucalc crpa
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-6" type="checkbox" id="nav-4-6">
+    
+    <label class="md-nav__link" for="nav-4-6">
+      DFPT
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-6">
+        DFPT
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../rf1/" title="RF1" class="md-nav__link">
+      RF1
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../rf2/" title="RF2" class="md-nav__link">
+      RF2
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../elastic/" title="Elastic" class="md-nav__link">
+      Elastic
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ffield/" title="Ffield" class="md-nav__link">
+      Ffield
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../nlo/" title="Nlo" class="md-nav__link">
+      Nlo
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../dmft/" title="DMFT" class="md-nav__link">
+      DMFT
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-8" type="checkbox" id="nav-4-8">
+    
+    <label class="md-nav__link" for="nav-4-8">
+      EPH
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-8">
+        EPH
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../eph_intro/" title="Eph intro" class="md-nav__link">
+      Eph intro
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../eph4mob/" title="Eph4mob" class="md-nav__link">
+      Eph4mob
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../eph4zpr/" title="Eph4zpr" class="md-nav__link">
+      Eph4zpr
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-9" type="checkbox" id="nav-4-9">
+    
+    <label class="md-nav__link" for="nav-4-9">
+      EPH-legacy
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-9">
+        EPH-legacy
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../eph/" title="Eph" class="md-nav__link">
+      Eph
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tdepes/" title="Tdepes" class="md-nav__link">
+      Tdepes
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-10" type="checkbox" id="nav-4-10">
+    
+    <label class="md-nav__link" for="nav-4-10">
+      Many-Body
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-10">
+        Many-Body
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../gw1/" title="GW1" class="md-nav__link">
+      GW1
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../gw2/" title="GW2" class="md-nav__link">
+      GW2
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../bse/" title="Bethe-Salpeter" class="md-nav__link">
+      Bethe-Salpeter
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-11" type="checkbox" id="nav-4-11">
+    
+    <label class="md-nav__link" for="nav-4-11">
+      Parallelism
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-11">
+        Parallelism
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../basepar/" title="Base" class="md-nav__link">
+      Base
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../paral_gspw/" title="GSPW" class="md-nav__link">
+      GSPW
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../paral_gswvl/" title="GSWVL" class="md-nav__link">
+      GSWVL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../paral_dfpt/" title="DFPT" class="md-nav__link">
+      DFPT
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../paral_images/" title="Images" class="md-nav__link">
+      Images
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../paral_mbt/" title="Many-Body" class="md-nav__link">
+      Many-Body
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../paral_moldyn/" title="Moldyn" class="md-nav__link">
+      Moldyn
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-12" type="checkbox" id="nav-4-12">
+    
+    <label class="md-nav__link" for="nav-4-12">
+      Multibinit
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-12">
+        Multibinit
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../lattice_model/" title="Lattice Model" class="md-nav__link">
+      Lattice Model
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../spin_model/" title="Spin Model" class="md-nav__link">
+      Spin Model
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../cut3d/" title="Cut3d" class="md-nav__link">
+      Cut3d
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../fold2bloch/" title="Fold2bloch" class="md-nav__link">
+      Fold2bloch
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../nuc/" title="Nuc" class="md-nav__link">
+      Nuc
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../optic/" title="Optic" class="md-nav__link">
+      Optic
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../positron/" title="Positron" class="md-nav__link">
+      Positron
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tddft/" title="Tddft" class="md-nav__link">
+      Tddft
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../wannier90/" title="Wannier90" class="md-nav__link">
+      Wannier90
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Theory
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Theory
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../theory/geometry/" title="Geometry" class="md-nav__link">
+      Geometry
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../theory/spherical_harmonics/" title="Spherical Harmonics" class="md-nav__link">
+      Spherical Harmonics
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../theory/wavefunctions/" title="Wavefunctions" class="md-nav__link">
+      Wavefunctions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../theory/noncollinear/" title="Noncollinear" class="md-nav__link">
+      Noncollinear
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../theory/pseudopotentials/" title="Pseudopotentials" class="md-nav__link">
+      Pseudopotentials
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../theory/mbt/" title="Many-Body Perturbation Theory" class="md-nav__link">
+      Many-Body Perturbation Theory
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../theory/bse/" title="Bethe-Salpeter" class="md-nav__link">
+      Bethe-Salpeter
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../theory/documents/" title="Documents" class="md-nav__link">
+      Documents
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../theory/acknowledgments/" title="Acknowledgments" class="md-nav__link">
+      Acknowledgments
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../theory/bibliography/" title="Bibliography" class="md-nav__link">
+      Bibliography
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Developers
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Developers
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../developers/git_and_gitlab/" title="Git and Gitlab" class="md-nav__link">
+      Git and Gitlab
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../developers/developers_howto/" title="HowTo for developers" class="md-nav__link">
+      HowTo for developers
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../developers/abimkdocs/" title="Abimkdocs" class="md-nav__link">
+      Abimkdocs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../developers/markdown/" title="Markdown" class="md-nav__link">
+      Markdown
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6-5" type="checkbox" id="nav-6-5">
+    
+    <label class="md-nav__link" for="nav-6-5">
+      Test Suite
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-6-5">
+        Test Suite
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../developers/testsuite/" title="Test list" class="md-nav__link">
+      Test list
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../developers/testsuite_howto/" title="Test Suite Howto" class="md-nav__link">
+      Test Suite Howto
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../developers/new_testsuite/" title="YAML-based test suite Howto" class="md-nav__link">
+      YAML-based test suite Howto
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../developers/yaml_tools_api/" title="YAML-based test suite Python tools and API" class="md-nav__link">
+      YAML-based test suite Python tools and API
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../developers/XgType/" title="XgType" class="md-nav__link">
+      XgType
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6-7" type="checkbox" id="nav-6-7">
+    
+    <label class="md-nav__link" for="nav-6-7">
+      Pseudos
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-6-7">
+        Pseudos
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../developers/psp1_info/" title="psp1" class="md-nav__link">
+      psp1
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../developers/psp3_info/" title="psp3" class="md-nav__link">
+      psp3
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../developers/psp45_info/" title="psp45" class="md-nav__link">
+      psp45
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../developers/psp5spinorbit_info/" title="psp5" class="md-nav__link">
+      psp5
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../developers/psp6_info/" title="psp6" class="md-nav__link">
+      psp6
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../developers/psp8_info/" title="psp8" class="md-nav__link">
+      psp8
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../developers/codestats/" title="Code stats" class="md-nav__link">
+      Code stats
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../developers/autoconf_examples/" title="Autoconf_examples" class="md-nav__link">
+      Autoconf_examples
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../developers/testlink/" title="Test Page for linkcheck" class="md-nav__link">
+      Test Page for linkcheck
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      About
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        About
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../about/release-notes/" title="Release Notes" class="md-nav__link">
+      Release Notes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../about/contributing/" title="Contributing" class="md-nav__link">
+      Contributing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../about/history/" title="History" class="md-nav__link">
+      History
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../about/license/" title="License" class="md-nav__link">
+      License
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#testing-paw-datasets-against-an-all-electron-code" title="Testing PAW datasets against an all-electron code" class="md-nav__link">
+    Testing PAW datasets against an all-electron code
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-introduction-the-quantities-to-be-compared" title="1. Introduction - the quantities to be compared" class="md-nav__link">
+    1. Introduction - the quantities to be compared
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-prerequisites-code-components-and-scripts" title="2. Prerequisites, code components and scripts" class="md-nav__link">
+    2. Prerequisites, code components and scripts
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-carbon-diamond" title="3. Carbon (diamond)" class="md-nav__link">
+    3. Carbon (diamond)
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-carbon-a-simple-datatset" title="3.1. Carbon - a simple datatset" class="md-nav__link">
+    3.1. Carbon - a simple datatset
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-carbon-calculating-the-equilibrium-lattice-parameter" title="3.2. Carbon - calculating the equilibrium lattice parameter" class="md-nav__link">
+    3.2. Carbon - calculating the equilibrium lattice parameter
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-carbon-the-all-electron-calculation" title="3.3. Carbon - the all-electron calculation" class="md-nav__link">
+    3.3. Carbon - the all-electron calculation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-carbon-improving-the-dataset" title="3.4. Carbon - improving the dataset" class="md-nav__link">
+    3.4. Carbon - improving the dataset
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-magnesium-dealing-with-the-fermi-energy-of-a-metallic-system" title="4. Magnesium - dealing with the Fermi energy of a metallic system" class="md-nav__link">
+    4. Magnesium - dealing with the Fermi energy of a metallic system
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-magnesium-the-all-electron-calculation" title="4.1. Magnesium - The all-electron calculation" class="md-nav__link">
+    4.1. Magnesium - The all-electron calculation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-magnesium-the-abinit-calculation" title="4.2. Magnesium - The abinit calculation" class="md-nav__link">
+    4.2. Magnesium - The abinit calculation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-paw-datasets-for-gw-calculations" title="5. PAW datasets for GW calculations" class="md-nav__link">
+    5. PAW datasets for GW calculations
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+
+                
+                  <a href="https://github.com/abinit/abinit/edit/master/doc/tutorial/paw3.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="third-tutorial-on-the-projector-augmented-wave-paw-technique">Third tutorial on the Projector Augmented-Wave (PAW) technique<a class="headerlink" href="#third-tutorial-on-the-projector-augmented-wave-paw-technique" title="Permanent link">&para;</a></h1>
+<h2 id="testing-paw-datasets-against-an-all-electron-code">Testing PAW datasets against an all-electron code<a class="headerlink" href="#testing-paw-datasets-against-an-all-electron-code" title="Permanent link">&para;</a></h2>
+<p>This tutorial will demonstrate how to test a generated PAW dataset against an
+all-electron code. We will be comparing results with the open <code class="codehilite">Elk</code> FP-LAPW code
+(a branch of the <code class="codehilite">EXCITING</code> code) available under GPLv3.</p>
+<p>You will learn how to compare calculations of the <em>equilibrium lattice</em>
+parameter, the <em>Bulk modulus</em> and the <em>band structure</em> between ABINIT PAW results
+and those from the <code class="codehilite">Elk</code> code.
+It is assumed you already know how to use ABINIT in the PAW case. The tutorial
+assumes no previous experience with the <code class="codehilite">Elk</code> code, but it is strongly advised
+that the users familiarise themselves a bit with this code before attempting
+to do similar comparisons with their own datasets.</p>
+<p>This tutorial should take about 3h-4h.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Supposing you made your own install of ABINIT, the input files to run the examples
+are in the <em>~abinit/tests/</em> directory where <em>~abinit</em> is the absolute path of the abinit top-level directory.
+If you have NOT made your own install, ask your system administrator where to find the package, especially the executable and test files.</p>
+<p>To execute the tutorials, create a working directory (<code class="codehilite">Work*</code>) and
+copy there the input files of the lesson.</p>
+<p>Most of the tutorials do not rely on parallelism (except specific <a class="wikilink lesson-wikilink" href="../basepar">tutorials on parallelism</a>).
+However you can run most of the tutorial examples in parallel, see the <a class="wikilink topic-wikilink" data-content="How to set parameters for a parallel calculation" data-placement="auto right" data-toggle="popover" data-trigger="hover focus" href="../../topics/parallelism">topic on parallelism</a>.</p>
+<p>In case you work on your own PC or workstation, to make things easier, we suggest you define some handy environment variables by
+executing the following lines in the terminal:</p>
+<div class="codehilite"><pre><span></span><span class="nb">export</span> <span class="nv">ABI_HOME</span><span class="o">=</span>Replace_with_the_absolute_path_to_the_abinit_top_level_dir
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$ABI_HOME</span>/src/98_main/:<span class="nv">$PATH</span>
+<span class="nb">export</span> <span class="nv">ABI_TESTS</span><span class="o">=</span><span class="nv">$ABI_HOME</span>/tests/
+<span class="nb">export</span> <span class="nv">ABI_PSPDIR</span><span class="o">=</span><span class="nv">$ABI_TESTS</span>/Psps_for_tests/  <span class="c1"># Pseudopotentials used in examples.</span>
+</pre></div>
+
+<p>Examples in this tutorial use these shell variables: copy and paste
+the code snippets into the terminal (<strong>remember to set ABI_HOME first!</strong>).
+The &lsquo;export PATH&rsquo; line adds the directory containing the executables to your <a href="http://www.linfo.org/path_env_var.html">PATH</a>
+so that you can invoke the code by simply typing <em>abinit</em> in the terminal instead of providing the absolute path.</p>
+</div>
+<h2 id="1-introduction-the-quantities-to-be-compared">1. Introduction - the quantities to be compared<a class="headerlink" href="#1-introduction-the-quantities-to-be-compared" title="Permanent link">&para;</a></h2>
+<p>When comparing results between all-electron and pseudopotential codes, it is
+usually <strong>impossible to compare total energies</strong>. This is because the total energy
+of an all-electron code includes the contribution from the <em>kinetic energy</em> of
+the <em>core orbitals</em>, while in the pseudopotential approach, the only information
+that is retained is the density distribution of the frozen core. This is
+typically so even in a PAW implementation.</p>
+<p>Differences in total energies should be comparable, but calculating these to a
+given accuracy is usually a long and cumbersome process. However, some things
+can be calculated with relative ease. These include structural properties -
+such as the equilibrium lattice parameter(s) and the bulk modulus - as well as
+orbital energies, i.e. the band structure for a simple bulk system.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We are here aiming to compare the results under similar numerical
+conditions. That does not necessarily mean that the calculations can be
+compared with experimental results, nor that the results of the calculations
+individually represent the absolutely most converged values for a given
+system. However, to ensure that the numerical precision is equivalent, we must
+take care to:</p>
+<ul>
+<li>Use the same (scalar-relativistic) exchange-correlation functional.</li>
+<li>Match the <code class="codehilite">Elk</code> muffin-tin radii and the PAW cutoff radii.</li>
+<li>Use a k-point grid of similar quality.</li>
+<li>Use a similar cutoff for the plane wave expansion.</li>
+<li>Freeze the core in the <code class="codehilite">Elk</code> code (whenever possible), to match the frozen PAW core in ABINIT.</li>
+<li>Use a similar atomic on-site radial grid.</li>
+</ul>
+</div>
+<p>We will use <strong>Carbon</strong>, in the <strong>diamond structure</strong>, as an example of a simple solid
+with a band gap, and we will use <strong>Magnesium</strong> as an example of a metallic solid.
+Naturally, it is important to keep things as simple as possible when
+benchmarking PAW datasets, and there is a problem when the element has no
+naturally occurring pure solid phase. For elements which are molecular in
+their pure state (like Oxygen, Nitrogen and so forth), or occur only in
+compound solids, one solution is to compare results on a larger range of
+solids where the other constituents have already been well tested. For
+instance, for oxygen, one could compare results for ZnO, MgO and MnO, provided
+that one has already satisfied oneself that the datasets for Zn, Mg, and Mn in
+their pure forms are good.</p>
+<p>One could also compare results for molecules, and we encourage you to do this
+if you have the time. However, doing this consistently in ABINIT requires a
+supercell approach and would make this tutorial very long, so we shall not do
+it here. We will now discuss the prerequisites for this tutorial.</p>
+<h2 id="2-prerequisites-code-components-and-scripts">2. Prerequisites, code components and scripts<a class="headerlink" href="#2-prerequisites-code-components-and-scripts" title="Permanent link">&para;</a></h2>
+<p>It is assumed that you are already familiar with the contents and procedures
+in tutorials <a href="../paw1">PAW1</a> and <a href="../paw2">PAW2</a>, and so
+have some familiarity with input files for atompaw, and the issues in creating
+PAW datasets. To exactly reproduce the results in this tutorial, you will
+need:</p>
+<ul>
+<li>
+<p>The <code class="codehilite">ATOMPAW</code> code for generating PAW datasets.
+You have now to install the <code class="codehilite">ATOMPAW</code> code. Try to type in your browser:</p>
+<p>https://users.wfu.edu/natalie/papers/pwpaw/atompaw-4.1.0.6.tar.gz</p>
+</li>
+</ul>
+<p>Then, download the file, unzip and untar it.Go into the directory &ldquo;doc&rdquo;, open the file &ldquo;atompaw-usersguide.pdf&rdquo;. Go p.3 and follow the instructions to compile atompaw.</p>
+<ul>
+<li>
+<p>the <code class="codehilite">Elk</code> code (this tutorial was designed with v1.2.15),
+    available <a href="https://sourceforge.net/projects/elk/files/">here</a>.
+    We will use the <code class="codehilite">Elk</code> code itself, as well as its <code class="codehilite">eos</code> (equation-of-state) utility,
+    for calculating equilibrium lattice parameters.</p>
+</li>
+<li>
+<p>Auxiliary <code class="codehilite">bash</code> and <code class="codehilite">python</code> <em>scripts</em> for the comparison of band structures, available in the directory
+    <em>$ABI_HOME/doc/tutorial/paw3_assets/scripts/</em>. For the <code class="codehilite">python</code> scripts, <code class="codehilite">python3</code> is required.
+    There are also various <em>gnuplot</em> scripts there.</p>
+</li>
+</ul>
+<p>You will of course also need a working copy of ABINIT. Please make sure that
+the above components are downloaded and working on your system before
+continuing this tutorial. The tutorial also makes extensive use of <a href="http://www.gnuplot.info/">gnuplot</a> , so
+please also ensure that a recent and working version is installed on your system.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>By the time that you are doing this tutorial there will probably be
+newer versions of all these programs available. It is of course better to use
+the latest versions, and we simply state the versions of codes used when this
+tutorial was written so that specific numerical results can be reproduced if necessary.</p>
+</div>
+<h2 id="3-carbon-diamond">3. Carbon (diamond)<a class="headerlink" href="#3-carbon-diamond" title="Permanent link">&para;</a></h2>
+<h3 id="31-carbon-a-simple-datatset">3.1. Carbon - a simple datatset<a class="headerlink" href="#31-carbon-a-simple-datatset" title="Permanent link">&para;</a></h3>
+<p>Make a <em>working directory</em> for the <code class="codehilite">ATOMPAW</code> generation (you could call it
+<code class="codehilite">C_atompaw</code>) and copy the file: <a href="../paw3_assets/inputs/C_simple.input">C_simple.input</a> to it.
+Then go there and run <code class="codehilite">ATOMPAW</code> by typing (assuming that you have set things up so that you
+can run atompaw by just typing atompaw):</p>
+<div class="codehilite"><pre><span></span>atompaw &lt; C_simple.input
+</pre></div>
+
+
+<p>The code should run, and if you do an <code class="codehilite">ls</code>, the contents of the directory will be something like:</p>
+<div class="codehilite"><pre><span></span> C                        density     logderiv.2  potSC1   tprod.2  wfn2    wfnSC1
+ C.LDA-PW-paw.xml         dummy       NC          rvf      vloc     wfn3
+ C.LDA-PW-paw.xml.corewf  fort.24     OCCWFN      rVx      wfn001   wfn4
+ compare.abinit           logderiv.0  potAE0      tau      wfn002   wfn5
+ C_simple.input           logderiv.1  potential   tprod.1  wfn1     wfnAE0
+</pre></div>
+
+
+<p>There is a lot of output, so it is useful to work with a graphical overview.
+Copy the <code class="codehilite">gnuplot</code> <em>script</em> <a href="../paw3_assets/scripts/plot_C_all.p">plot_C_all.p</a> to your folder.
+Open a new terminal window by typing <code class="codehilite">xterm &amp;</code>, and run <code class="codehilite">gnuplot</code> in the new
+terminal window. At the <code class="codehilite">gnuplot</code> command prompt type:</p>
+<div class="codehilite"><pre><span></span>gnuplot&gt; load &#39;plot_C_all.p&#39;
+</pre></div>
+
+
+<p>You should get a plot that looks like this:</p>
+<p><img alt="Plot of atompaw outputs" src="../paw3_assets/images/plot_C_all_1.png" /></p>
+<p>You can now keep the <code class="codehilite">gnuplot</code> terminal and plot window open as you work, and if
+you change the <code class="codehilite">ATOMPAW</code> input file and re-run it, you can update the plot by
+retyping the <code class="codehilite">load..</code> command. The <code class="codehilite">gnuplot</code> window plots the essential
+information from the <code class="codehilite">ATOMPAW</code> outputs, the logarithmic derivatives, (the
+derivatives of the dataset are green), the wavefunctions and projectors for
+each momentum channel (the full wavefunction is in red, the PW part is green,
+and the projector is blue) as well as the local potential. Finally, it shows the Fourier transform
+of the projector products (the x-axis is in units of Ha).</p>
+<p>The inputs directory also contains scripts for plotting these graphs
+individually, and you are encouraged to test and modify them. We can look
+inside the <code class="codehilite">C_simple.input</code> file:</p>
+<div class="codehilite"><pre><span></span> C 6                                         ! Atomic name and number
+ LDA-PW scalarrelativistic loggrid 801 logderivrange -10 40 1000 ! XC approx., SE type, gridtype, # pts, logderiv
+ 2 2 0 0 0 0                                 ! maximum n for each l: 2s,2p,0d,0f..
+ 2 1 2                                       ! Partially filled shell: 2p^2
+ 0 0 0                                       ! Stop marker
+ c                                           ! 1s - core
+ v                                           ! 2s - valence
+ v                                           ! 2p - valence
+ 1                                           ! l_max treated = 1
+ 1.3                                         ! core radius r_c
+ n                                           ! no more unoccupied s-states
+ n                                           ! no more unoccupied p-states
+ vanderbilt                                  ! vanderbilt scheme for finding projectors
+ 2 0                                         ! localisation scheme
+ 1.3                                         ! Core radius for occ. 2s state
+ 1.3                                         ! Core radius for occ. 2p state
+ XMLOUT                                      ! Run atompaw2abinit converter
+ prtcorewf noxcnhat nospline noptim          ! Abinit conversion options
+ 0                                           ! Exit
+</pre></div>
+
+
+<p>Here we see that the current dataset is very simple, it has no basis states
+beyond the <span><span class="MathJax_Preview">2s</span><script type="math/tex">2s</script></span> and <span><span class="MathJax_Preview">2p</span><script type="math/tex">2p</script></span> occupied valence states in carbon. It is thus not
+expected to produce very good results, since there is almost no flexibility in
+the PAW dataset. Note that the <code class="codehilite">scalarrelativistic</code> option is turned on. While
+this is not strictly necessary for such a light atom, we must always ensure to
+have this turned on if we intend to compare with results from the <code class="codehilite">Elk</code> code.</p>
+<p>We will now run basic convergence tests in abinit for this dataset. The
+dataset file for abinit has already been generated (it is the <code class="codehilite">C.LDA-PW-paw.xml</code> file in the current directory). Make a new subdirectory for the
+test in the current directory (you could call it <code class="codehilite">abinit_test</code> for instance), go
+there and copy the file: <a href="../paw3_assets/inputs/ab_C_test.in">ab_C_test.in</a> into
+it. This ABINIT input file contains several datasets which increment the <code class="codehilite">ecut</code>
+input variable, and perform ground state and band structure calculations for
+each value of <code class="codehilite">ecut</code>. This is thus the internal abinit convergence study. Any
+dataset is expected to converge to a result sooner or later, but that does not
+mean that the final result is accurate, unless the dataset is good. The goal
+is of course to generate a dataset which both converges quickly and is very accurate.
+The <code class="codehilite">ab_C_test.in</code> file contains:</p>
+<div class="codehilite"><pre><span></span>outdata_prefix=&quot;outputs/ab_C_test_o&quot;
+tmpdata_prefix=&quot;outputs/ab_C_test&quot;
+</pre></div>
+
+
+<p>So it expects the newly generated dataset to be in the directory above.
+Also, to keep things tidy, it assumes the outputs will be put in a subdirectory
+called <code class="codehilite">outputs/</code>. Make sure to create it before you start the abinit run by writing:</p>
+<div class="codehilite"><pre><span></span>mkdir outputs
+</pre></div>
+
+
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>You may have to change the path to reach the Psps_for_tests repository. For this, modify the varaible <code class="codehilite">pp_dirpath</code> in the input file. </p>
+</div>
+<p>You can now run the abinit tests (maybe even in a separate new <code class="codehilite">xterm</code> window), by executing:</p>
+<div class="codehilite"><pre><span></span>abinit ab_C_test.in &gt;&amp; log_C_test &amp;
+</pre></div>
+
+
+<p>There are 18 double-index datasets in total, with the first index running from
+1 to 9 and the second from 1 to 2. You can check on the progress of the
+calculation by issuing <code class="codehilite">ls outputs/</code>. When the <code class="codehilite"><span class="cp">.._o_DS92..</span></code> files appear, the
+calculation should be just about finished. While the calculation runs you
+might want to take a look in the input file. Note the lines pertaining to the
+increment in <code class="codehilite">ecut</code> (around line 29):</p>
+<div class="codehilite"><pre><span></span> ...
+ # Cutoff variables
+ ecut:? 5.0
+ ecut+?  5.0
+ `pawecutdg` 110.0
+ ecutsm 0.5
+ ...
+</pre></div>
+
+
+<p>ecut is increased in increments of 5 Ha from an initial value of 5, to a final
+ecut of 45 Ha. Note that <code class="codehilite">pawecutdg</code> is kept fixed, at a value high enough to be
+expected to be good for the final value of <code class="codehilite">ecut</code>. In principle, a convergence
+study of <code class="codehilite">pawecutdg</code> should be performed as well, once a good value of <code class="codehilite">ecut</code> has been found.</p>
+<p>We can now check the basic convergence attributes of the dataset. The
+convergence of the total energy is easily checked by issuing some <code class="codehilite">grep</code> commands:</p>
+<div class="codehilite"><pre><span></span> grep &#39;etotal&#39; ab_C_test.abo
+</pre></div>
+
+
+<p>This should give you an output similar to this (though not the text to the left):</p>
+<div class="codehilite"><pre><span></span>                                     etotal   (ecut)
+ etotal11 -1.0972441353E+01
+ etotal21 -1.1443217299E+01      - 470.78 mHa (10 Ha)
+ etotal31 -1.1507234681E+01      -  64.02 mHa (15 Ha)
+ etotal41 -1.1517560274E+01      -  10.33 mHa (20 Ha)
+ etotal51 -1.1518066800E+01      -   0.51 mHa (25 Ha)
+ etotal61 -1.1518201844E+01      -   0.14 mHa (30 Ha)
+ etotal71 -1.1518427967E+01      -   0.23 mHa (35 Ha)
+ etotal81 -1.1518542165E+01      -   0.11 mHa (40 Ha)
+ etotal91 -1.1518570692E+01      -   0.03 mHa (45 Ha)
+</pre></div>
+
+
+<p>Your values might differ slightly in the last decimals. The calculation of
+diamond with the current PAW Carbon dataset converged to a precision of the
+total energy below 1 mHa for a cutoff of about 25 Ha (this is not particularly
+good for a PAW dataset). Also, the convergence is a bit jumpy after an <code class="codehilite">ecut</code> of
+about 25 Ha, which is an indication of a) that the number of projectors per
+angular momentum channel is low, and  b) that other parameters apart from ecut
+dominate convergence beyond this point.</p>
+<p>If we turn to the ~band structure~, we can use the script
+<a href="../paw3_assets/scripts/comp_bands_abinit2abinit.py">comp_bands_abinit2abinit.py</a>
+to check the convergence of the band structure. Copy the script to the
+directory where the ABINIT input file is and issue:</p>
+<div class="codehilite"><pre><span></span> python comp_bands_abinit2abinit.py outputs/ab_C_test_o_DS12_EIG outputs/ab_C_test_o_DS92_EIG eV
+</pre></div>
+
+
+<p>This will print a long series of columns and at the end you will see:</p>
+<div class="codehilite"><pre><span></span> ...
+ #        nvals:   280
+ # average diff:     1.758809  eV
+ # minimum diff:    -4.437905  eV
+ # maximum diff:     1.089000  eV
+ #
+ # NOTE: Abinit values are read in fixed format with five decimal
+ #       places. For low values, four or three decimal figures
+ #       may be the highest precision you can get.
+</pre></div>
+
+
+<p>This provides you with some statistics of the difference in the band energies.
+Specifically this is the average difference between a the band structure
+calculated at an <code class="codehilite">ecut</code> of 5 Ha (in dataset 12) and another at an <code class="codehilite">ecut</code> of 45 Ha (in dataset 92).</p>
+<p>The differences between these datasets are naturally very large, about 1.8 eV
+on average, because the band-structure of the first dataset is far from
+converged. The columns output before the statistics are arranged so that if
+you pipe the output to a data file:</p>
+<div class="codehilite"><pre><span></span>python comp_bands_abinit2abinit.py outputs/ab_C_test_o_DS12_EIG outputs/ab_C_test_o_DS92_EIG eV &gt; bands_5Ha_vs_45Ha.dat
+</pre></div>
+
+
+<p>you can plot the two band structures in <code class="codehilite">gnuplot</code> directly, by entering:</p>
+<div class="codehilite"><pre><span></span> gnuplot&gt; plot &#39;bands_5Ha_vs_45Ha.dat&#39; u 1:2 w lp title &#39;5 Ha&#39;, &#39;bands_5Ha_vs_45Ha.dat&#39; u 1:3 w lp title &#39;45 Ha&#39;
+</pre></div>
+
+
+<p>This should furnish you with a graph that looks something like this:</p>
+<p><img alt="Comparison of bands 5 vs. 45 Ha" src="../paw3_assets/images/plot_C_band_1.png" /></p>
+<p>Not surprisingly, the band structures are very different. However, a search
+through the datasets of increasing index (i.e. DS22, DS32, DS42, &hellip;) yields
+that for dataset 42, i.e with an <code class="codehilite">ecut</code> of 20 Ha, we are already converged to a
+level of 0.01 eV. Issuing the command:</p>
+<div class="codehilite"><pre><span></span> python comp_bands_abinit2abinit.py outputs/ab_C_test_o_DS42_EIG outputs/ab_C_test_o_DS92_EIG eV &gt; bands_20Ha_vs_45Ha.dat
+</pre></div>
+
+
+<p>and plotting this with:</p>
+<div class="codehilite"><pre><span></span> gnuplot&gt; plot &#39;bands_20Ha_vs_45Ha.dat&#39; u 1:2 w lp title &#39;20 Ha&#39;, &#39;bands_20Ha_vs_45Ha.dat&#39; u 1:3 w lp title &#39;45 Ha&#39;
+</pre></div>
+
+
+<p>Should give you a plot similar to this:</p>
+<p><img alt="Comparison of bands 20 vs. 45 Ha" src="../paw3_assets/images/plot_C_band_2.png" /></p>
+<p>You can convince yourself by zooming in that the band structures are very
+similar. The statistics at the end of the bands_20Ha_vs_45Ha.dat  file shows
+that we are converged within abinit:</p>
+<div class="codehilite"><pre><span></span>...
+#        nvals:   280
+# average diff:     0.003808  eV
+# minimum diff:    -0.008980  eV
+# maximum diff:     0.000272  eV
+...
+</pre></div>
+
+
+<h3 id="32-carbon-calculating-the-equilibrium-lattice-parameter">3.2. Carbon - calculating the equilibrium lattice parameter<a class="headerlink" href="#32-carbon-calculating-the-equilibrium-lattice-parameter" title="Permanent link">&para;</a></h3>
+<p>That we have converged the dataset on its own does of course not mean that the
+dataset is good, i.e. that it reproduces the same results as an all-electron
+calculation. To independently verify that the dataset is good, we need to
+calculate the equilibrium lattice parameter (and the <em>Bulk modulus</em>) and compare
+this and the band structure with an <code class="codehilite">Elk</code> calculation.</p>
+<p>First, we will need to calculate the total energy of diamond in ABINIT for a
+number of lattice parameters around the minimum of the total energy. There is
+example input file for doing this at:
+<a href="../paw3_assets/inputs/ab_C_equi.in">ab_C_equi.in</a>.
+The new input file has ten datasets which increment the lattice parameter, alatt,
+from 6.1 to 7.0 Bohr in steps of 0.1 Bohr. A look in the input file will tell
+you that <code class="codehilite">ecut</code> is set to 25 Hartrees. Copy these to your abinit_test directory and run:</p>
+<div class="codehilite"><pre><span></span>abinit  ab_C_equi.in &gt;&amp; log_C_equi &amp;
+</pre></div>
+
+
+<p>The run should be done fairly quickly, and when it&rsquo;s done we can check on the
+volume and the total energy by using &ldquo;grep&rdquo;</p>
+<div class="codehilite"><pre><span></span> grep &#39;volume&#39; log_C_equi
+</pre></div>
+
+
+<p>and</p>
+<div class="codehilite"><pre><span></span> grep &#39;etotal&#39; log_C_equi
+</pre></div>
+
+
+<p>The outputs should be something like this:</p>
+<div class="codehilite"><pre><span></span> <span class="kc">...</span>
+ Unit cell volume ucvol<span class="o">=</span>  <span class="m">5.6745250E+01</span> bohr<span class="o">^</span><span class="m">3</span>
+ Unit cell volume ucvol<span class="o">=</span>  <span class="m">5.9582000E+01</span> bohr<span class="o">^</span><span class="m">3</span>
+ Unit cell volume ucvol<span class="o">=</span>  <span class="m">6.2511750E+01</span> bohr<span class="o">^</span><span class="m">3</span>
+ Unit cell volume ucvol<span class="o">=</span>  <span class="m">6.5536000E+01</span> bohr<span class="o">^</span><span class="m">3</span>
+ Unit cell volume ucvol<span class="o">=</span>  <span class="m">6.8656250E+01</span> bohr<span class="o">^</span><span class="m">3</span>
+ Unit cell volume ucvol<span class="o">=</span>  <span class="m">7.1874000E+01</span> bohr<span class="o">^</span><span class="m">3</span>
+ Unit cell volume ucvol<span class="o">=</span>  <span class="m">7.5190750E+01</span> bohr<span class="o">^</span><span class="m">3</span>
+ Unit cell volume ucvol<span class="o">=</span>  <span class="m">7.8608000E+01</span> bohr<span class="o">^</span><span class="m">3</span>
+ Unit cell volume ucvol<span class="o">=</span>  <span class="m">8.2127250E+01</span> bohr<span class="o">^</span><span class="m">3</span>
+ Unit cell volume ucvol<span class="o">=</span>  <span class="m">8.5750000E+01</span> bohr<span class="o">^</span><span class="m">3</span>
+ <span class="kc">...</span>  
+       etotal1    <span class="m">-1.1461991605E+01</span>
+       etotal2    <span class="m">-1.1480508012E+01</span>
+       etotal3    <span class="m">-1.1494820912E+01</span>
+       etotal4    <span class="m">-1.1505365819E+01</span>
+       etotal5    <span class="m">-1.1512537944E+01</span>
+       etotal6    <span class="m">-1.1516696065E+01</span>   <span class="o">&lt;-</span>
+       etotal7    <span class="m">-1.1518166172E+01</span>   <span class="o">&lt;-</span> minimum around here
+       etotal8    <span class="m">-1.1517244861E+01</span>   <span class="o">&lt;-</span>
+       etotal9    <span class="m">-1.1514202226E+01</span>
+       etotal10   <span class="m">-1.1509284702E+01</span>
+ <span class="kc">...</span>
+</pre></div>
+
+
+<p>If we examine the <code class="codehilite">etotal</code> values, the total energy does indeed go to a
+minimum, and we also see that given the magnitude of the variations of the
+total energy, an <code class="codehilite">ecut</code> of 25 Ha should be more than sufficient. We will now
+extract the equilibrium volume and bulk modulus by using the eos bundled with
+elk. This requires us to put the above data in an  eos.in file. Create such a
+file with your favorite editor and enter the following five lines and then the
+data you just extracted:</p>
+<div class="codehilite"><pre><span></span> &quot;C - Diamond&quot;                : cname - name of material
+ 2                            : natoms - number of atoms
+ 1                            : etype - equation of state fit type
+ 50.0 95.0 100                : vplt1, vplt2, nvplt - start, end and #pts for fit
+ 10                            : nevpt - number of supplied points
+ 5.6745250E+01  -1.1461991605E+01
+ 5.9582000E+01  -1.1480508012E+01
+ 6.2511750E+01  -1.1494820912E+01
+ 6.5536000E+01  -1.1505365819E+01
+ 6.8656250E+01  -1.1512537944E+01
+ 7.1874000E+01  -1.1516696065E+01
+ 7.5190750E+01  -1.1518166172E+01
+ 7.8608000E+01  -1.1517244861E+01
+ 8.2127250E+01  -1.1514202226E+01
+ 8.5750000E+01  -1.1509284702E+01
+</pre></div>
+
+
+<p>When you run <code class="codehilite">eos</code> (the executable should be located in <code class="codehilite">src/eos/</code> in the
+directory where <code class="codehilite">Elk</code> was compiled), it will produce several  <code class="codehilite"><span class="na">.OUT</span></code> files. The
+file <code class="codehilite">PARAM.OUT</code> contains the information we need:</p>
+<div class="codehilite"><pre><span></span> C - Diamond
+
+ Universal EOS
+ Vinet P et al., J. Phys.: Condens. Matter 1, p1941 (1989)
+
+ (Default units are atomic: Hartree, Bohr etc.)
+
+ V0                =            75.50730327    
+ E0                =           -11.51817590    
+ B0                =           0.1564766690E-01
+ B0&#39;               =            3.685291965
+
+ B0 (GPa)          =            460.3701770
+</pre></div>
+
+
+<p>This tells us the equilibrium volume and bulk modulus. The volume of our
+diamond FCC lattice depends on the lattice parameter as: <span><span class="MathJax_Preview">\frac{a^3}{4}</span><script type="math/tex">\frac{a^3}{4}</script></span>. If we want to
+convert the volume to a lattice parameter, we have to multiply by four and
+then take the third root, so:</p>
+<div class="codehilite"><pre><span></span>alatt = (4*75.50730327)^(1/3) = 6.7094 Bohr (3.5505 Å)
+</pre></div>
+
+
+<p>at equilibrium for this dataset.</p>
+<h3 id="33-carbon-the-all-electron-calculation">3.3. Carbon - the all-electron calculation<a class="headerlink" href="#33-carbon-the-all-electron-calculation" title="Permanent link">&para;</a></h3>
+<p>In order to estimate whether these values are good or not, we need independent
+verification, and this will be provided by the all-electron <code class="codehilite">Elk</code> code. There is
+an <code class="codehilite">Elk</code> input file matching our abinit diamond calculation at
+<a href="../paw3_assets/inputs/elk_C_diamond.in">elk_C_diamond.in</a>. You need
+to copy this file to a directory set up for the <code class="codehilite">Elk</code> run (why not call it
+<code class="codehilite">C_elk</code>), and it needs to be renamed to <code class="codehilite">elk.in</code>, which is the required input
+name for an <code class="codehilite">Elk</code> calculation. We are now ready to run the <code class="codehilite">Elk</code> code for the first time.</p>
+<p>If we take a look in the <code class="codehilite">elk.in</code> file, at the beginning we will see the lines:</p>
+<div class="codehilite"><pre><span></span> ! Carbon, diamond structure (FCC)
+
+ ! The tasks keyword defines what will be done by the code:
+ ! 0 - Perform ground-state calculation from scratch
+ ! 1 - Restart GS calc. from STATE.OUT file
+ ! 20 - Calculate band structure as defined by plot1d
+ tasks
+ 0
+ 20
+
+ ! Set core-valence cutoff energy
+ ecvcut
+  -6.0
+
+ ! Construct atomic species file &#39;C.in&#39;
+ species
+  6  : atomic number
+  &#39;C&#39;
+  &#39;carbon&#39;
+  21894.16673    : atomic mass
+  1.300000000    : muffin-tin radius
+  4              : number of occ. states
+  1   0   1   2  : 1s
+  2   0   1   2  : 2s
+  2   1   1   1  : 2p m=1
+  2   1   2   1  : 2p m=2
+...
+</pre></div>
+
+
+<p>Any text after an exclamation mark (or a colon on the lines defining data) is
+a comment. The keyword <code class="codehilite">tasks</code> defines what the code should do. In this case
+it is set to calculate the ground state for the given structure and to
+calculate a band structure. The block <code class="codehilite">ecvcut</code> sets the core-valence cutoff
+energy. The next input block, <code class="codehilite">species</code> defines the parameters for the
+generation of an atomic species file (it will be given the name <code class="codehilite">C.in</code>). As a
+first step, we need to generate this file, but we will need to modify it
+before we perform the main calculation. Therefore, you should run the code
+briefly (by just running the executable in your directory) and then kill it
+after a few seconds (using <code class="codehilite">Ctrl+C</code> for instance ), as soon as it has generated the <code class="codehilite">C.in</code> file.</p>
+<p>If you look in your directory after the code has been killed you will probably
+see a lot of <code class="codehilite"><span class="na">.OUT</span></code> files with uppercase names. These are the <code class="codehilite">Elk</code> output files.
+You should also see a <code class="codehilite">C.in</code> file. When you open it, you should see:</p>
+<div class="codehilite"><pre><span></span> &#39;C&#39;                                        : spsymb
+ &#39;carbon&#39;                                   : spname
+  -6.00000                                  : spzn
+   39910624.45                              : spmass
+   0.816497E-06    1.3000   38.0877   300    : rminsp, rmt, rmaxsp, nrmt
+   4                                        : nstsp
+   1   0   1   2.00000    T                 : nsp, lsp, ksp, occsp, spcore
+   2   0   1   2.00000    F
+   2   1   1   1.00000    F
+   2   1   2   1.00000    F
+   1                                        : apword
+    0.1500   0  F                           : apwe0, apwdm, apwve
+   0                                        : nlx
+   3                                        : nlorb
+   0   2                                    : lorbl, lorbord
+    0.1500   0  F                           : lorbe0, lorbdm, lorbve
+    0.1500   1  F
+   1   2                                    : lorbl, lorbord
+    0.1500   0  F                           : lorbe0, lorbdm, lorbve
+    0.1500   1  F
+   0   2                                    : lorbl, lorbord
+    0.1500   0  F                           : lorbe0, lorbdm, lorbve
+   -0.5012   0  T
+</pre></div>
+
+
+<p>The first four lines contain information pertaining to the symbol, name,
+charge and mass of the atom. The fifth line holds data concerning the
+numerical grid: the distance of the first grid point from the origin, the
+muffin-tin radius, the maximum radius for the on-site atomic calculation, and
+the number of grid points. The subsequent lines contain data about the
+occupied states (the ones ending with &ldquo;T&rdquo; or &ldquo;F&rdquo;), and after that there is
+information pertaining to the FP-LAPW on-site basis functions.</p>
+<p>The first important thing to check here is whether all the orbitals that we
+have included as valence states in the PAW dataset are treated as valence in
+this species file. We do this by checking that there is an &ldquo;F&rdquo; after the
+corresponding states in the occupation list:</p>
+<div class="codehilite"><pre><span></span> ...
+    1   0   1   2.00000    T                 : spn, spl, spk, spocc, spcore
+    2   0   1   2.00000    F
+    2   1   1   1.00000    F
+    2   1   2   1.00000    F
+ ...
+</pre></div>
+
+
+<p>The first two numbers are the <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>, <span><span class="MathJax_Preview">l</span><script type="math/tex">l</script></span> quantum numbers of the atomic state, so we
+see that the <span><span class="MathJax_Preview">2s</span><script type="math/tex">2s</script></span> states, and the <span><span class="MathJax_Preview">2p</span><script type="math/tex">2p</script></span> states are set to valence as in the PAW dataset.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This might not be the case in general, the version of <code class="codehilite">Elk</code> we use is
+modified to accept an adjustment of the <em>cutoff energy</em> for determining whether
+a state should be treated as core or valence. This is what is set by the line:
+<div class="codehilite"><pre><span></span>...
+ecvcut
+-6.0 : core-valence cutoff energy
+...
+</pre></div></p>
+</div>
+<p>in the <code class="codehilite">elk.in</code> file. If you find too few or too many states are included as
+valence for another atomic species, this value needs to be adjusted downwards or upwards.</p>
+<p>The second thing we need to check is whether the number of grid points and the
+<em>muffin-tin</em> radius that we use in the <code class="codehilite">Elk</code> calculation is roughly equivalent to
+the PAW one. If you have a look in the PAW dataset we generated before, i.e.
+in the <code class="codehilite">C_LDA.pawps</code> file, there is the line:</p>
+<div class="codehilite"><pre><span></span> ...
+ &lt;radial_grid eq=&quot;r=a*(exp(d*i)-1)&quot; a=&quot; 2.1888410558886799E-03&quot; d=&quot; 1.3133046335332079E-02&quot; istart=&quot;0&quot; iend=&quot;  800&quot; id=&quot;log1&quot;&gt;
+</pre></div>
+
+
+<p><values>
+     &hellip;</p>
+<p>These define the PAW grids used for wavefunctions, densities and potentials.
+To approximately match the intensity of the grids, we should modify the fifth
+line in the <code class="codehilite">C.in</code> file:</p>
+<div class="codehilite"><pre><span></span> ...
+   0.816497E-06    1.3000   38.0877   300    : sprmin, rmt, sprmax, nrmt
+ ...
+ to:
+ ...
+   0.816497E-06    1.3000   38.0877   500    : sprmin, rmt, sprmax, nrmt
+ ...
+</pre></div>
+
+
+<p>You now need to comment out the species generation input block in the <code class="codehilite">elk.in</code> file:</p>
+<div class="codehilite"><pre><span></span> ...
+ ! Construct atomic species file &#39;C.in&#39;
+ !species
+ ! 6  : atomic number
+ ! &#39;C&#39;
+ ! &#39;carbon&#39;
+ ! 21894.16673    : atomic mass
+ ! 1.300000000    : muffin-tin radius
+ ! 4              : number of occ. states
+ ! 1   0   1   2  : 1s
+ ! 2   0   1   2  : 2s
+ ! 2   1   1   1  : 2p m=1
+ ! 2   1   2   1  : 2p m=2
+ ...
+</pre></div>
+
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is very important! If you do not comment these lines the species
+file <code class="codehilite">C.in</code> will be regenerated when you run <code class="codehilite">Elk</code> and your modifications will be lost.</p>
+</div>
+<p>Now it is time to start <code class="codehilite">Elk</code> again. The code will now run and produce a lot of
+<code class="codehilite"><span class="na">.OUT</span></code> files. There is rarely anything output to screen, unless it&rsquo;s an error
+message, so to track the progress of the <code class="codehilite">Elk</code> calculation you can use the <code class="codehilite">tail</code> command:</p>
+<div class="codehilite"><pre><span></span> tail -f INFO.OUT
+</pre></div>
+
+
+<p>You get out of <code class="codehilite">tail</code> by pressing <code class="codehilite">CRTL+C</code>. While the calculation is running,
+you might want to familiarise yourself with the different input blocks in the
+<code class="codehilite">elk.in</code> file. When the <code class="codehilite">Elk</code> run has finished, there will be a <code class="codehilite">BAND.OUT</code> file in
+your run directory. We can now do an analogous band structure comparison to
+before, by using the python script <a href="../paw3_assets/scripts/comp_bands_abinit2elk.py">comp_bands_abinit2elk.py</a>
+(you should copy this to your current directory). If your previous abinit
+calculation is in the subdirectory <code class="codehilite">path/abinit_test</code> above you write:</p>
+<div class="codehilite"><pre><span></span> python comp_bands_abinit2elk.py path/abinit_test/outputs/ab_C_test_o_DS42_EIG BAND.OUT eV
+</pre></div>
+
+
+<p>This will get you the ending lines:</p>
+<div class="codehilite"><pre><span></span> ...
+ #        nvals:   280
+ # average diff:    12.393189  eV
+ # minimum diff:   -12.668010  eV
+ # maximum diff:   -12.290953  eV
+ ...
+</pre></div>
+
+
+<p>So it looks like there is a huge difference! However, there is something we
+have forgotten. Pipe the data to a file by writing:</p>
+<div class="codehilite"><pre><span></span>python comp_bands_abinit2elk.py path/abinit_test/outputs/ab_C_test_o_DS42_EIG BAND.OUT eV &gt; bands.dat
+</pre></div>
+
+
+<p>and plot it in <code class="codehilite">gnuplot</code> with:</p>
+<div class="codehilite"><pre><span></span>gnuplot&gt; plot &#39;bands.dat&#39; u 1:2 w lp title &#39;ABINIT&#39;, &#39;bands.dat&#39; u 1:3 w lp title &#39;Elk&#39;
+</pre></div>
+
+
+<p>You should get a graph like this:</p>
+<p><img alt="Comparison of abinit and elk bands without shift" src="../paw3_assets/images/band_abinit_elk_I.png" /></p>
+<p>As you can see, the band structures look alike but differ by an absolute
+shift, which is normal, because in a periodic system there is no unique vacuum
+energy, and band energies are always defined up to an arbitrary constant
+shift. This shift depends on the numerical details, and will be different for
+different codes using different numerical approaches. (Note in the <code class="codehilite">Elk</code> input
+file that the keyword <code class="codehilite">xctype</code> controls the type - LDA or GGA - of the
+exchange-correlation functional.)</p>
+<p>However, if we decide upon a reference pont, like the valence band maximum
+(VBM), or a point nearby, and align the two band plots at that point, there
+will still be differences. By comparing with the plot we just made, we see
+that the VBM is at the ninth k-point from the left, on band four. The script
+we used previously can accomodate a shift, by issuing the command:</p>
+<div class="codehilite"><pre><span></span>python comp_bands_abinit2elk.py path/abinit_test/outputs/ab_C_test_o_DS42_EIG BAND.OUT align 9 4 eV
+</pre></div>
+
+
+<p>So that if the keyword <code class="codehilite">align</code> is present followed by the k-point index and
+band number, we order the script to align at that point. Naturally, that will
+make the positions of that particular point fit perfectly, but if we look at
+the end of the output:</p>
+<div class="codehilite"><pre><span></span> ...
+ # AVERAGES FOR OCCUPIED STATES:
+ #        nvals:   106
+ # average diff:     0.021871  eV
+ # minimum diff:    -0.042755  eV
+ # maximum diff:     0.064097  eV
+ #
+ # AVERAGES FOR UNOCCUPIED STATES:
+ #        nvals:   174
+ # average diff:     0.047221  eV
+ # minimum diff:    -0.287747  eV
+ # maximum diff:     0.089309  eV
+
+ ...
+</pre></div>
+
+
+<p>we can tell that this is not true for the rest of the points. Since the script
+assumes alignment at the VBM, it now separates its statistics for occupied and
+unoccupied bands. The uppermost unoccupied bands can fit badly, depending on
+what precision was asked of abinit (especially, if <code class="codehilite">nbdbuf</code> is used).</p>
+<p>The fit is quite bad in general, an average of about 0.025 eV difference for
+occupied states, and about 0.05 eV difference for unoccupied states. If you
+plot the ouput as before, by piping the above to a <code class="codehilite">bands.dat</code> file and
+executing the same <code class="codehilite">gnuplot</code> command, you should get the plot below.</p>
+<p><img alt="Comparison of abinit and elk bands with shift" src="../paw3_assets/images/band_abinit_elk_II.png" /></p>
+<p>On the scale of the band plot there is a small - but visible - difference
+between the two. Note that the deviations are usually larger away from the
+high-symmetry points, which is why it&rsquo;s important to choose some points away
+from these as well when making these comparisons. However, it is difficult to
+conclude visually from the band structure that this is a bad dataset without
+using the statistics output by the <em>script</em>, and without some sense of what
+precision can be expected.</p>
+<p>As we are now creating our &ldquo;gold standard&rdquo; with an <code class="codehilite">Elk</code> calculation, we also
+need to calculate the equilibrium lattice parameter and Bulk modulus of
+diamond with the <code class="codehilite">Elk</code> code. Unfortunately, <code class="codehilite">Elk</code> does not use datasets, so the
+various lattice parameters we used in our abinit structural search will have
+to be put in one by one by hand and the code run for each. The lattice
+parameters in the abinit run were from 6.1 to 7.0 in increments of 0.1, so
+that makes ten runs in total. To perform the first, simply edit the <code class="codehilite">elk.in</code>
+file and change the keyword (at line 57):</p>
+<div class="codehilite"><pre><span></span> ...
+ scale
+ 6.7403 : lattice parameter in Bohr
+ ...
+</pre></div>
+
+
+<p>to:</p>
+<div class="codehilite"><pre><span></span> ...
+ scale
+ 6.1 : lattice parameter in Bohr
+ ...
+</pre></div>
+
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You also have to change the keyword <code class="codehilite">frozencr</code> to &ldquo;.false.&rdquo; because, at
+the time of writing, there is an error in the calculation of the total energy
+for frozen core-states. This means that the Elk input file must have the keyword (at line 65 ):
+<div class="codehilite"><pre><span></span>...
+frozencr
+.false.
+...
+</pre></div>
+when you are determining parameters which depend on the total energy. (It can
+safely be set to &ldquo;.true.&rdquo; for band structure calculations however.) The
+difference in the lattice parameters when using frozen versus unfrozen core
+states in an all-electron calculation is expected to be of the order of 0.005 Bohr.</p>
+</div>
+<p>Finally, you don&rsquo;t need to calculate the band structure for each run, so you
+might wand to change the <code class="codehilite">tasks</code> keyword section (at line 7):</p>
+<div class="codehilite"><pre><span></span> ...
+ tasks
+  0
+  20
+ ...
+</pre></div>
+
+
+<p>to just</p>
+<div class="codehilite"><pre><span></span> ...
+ tasks
+  0
+ ...
+</pre></div>
+
+
+<p>After you&rsquo;ve done these modifications, run <code class="codehilite">Elk</code> again. After the run has
+finished, look in the <code class="codehilite">TOTENERGY.OUT</code> and the <code class="codehilite">LATTICE.OUT</code> files to get the
+converged total energy and the volume. Write these down or save them in a safe
+place, edit the <code class="codehilite">elk.in</code> file again, and so forth until you&rsquo;ve calculated all
+ten energies corresponding to the ten lattice parameter values. In the end you
+should get a list which you can put in an <code class="codehilite">eos.in</code> file:</p>
+<div class="codehilite"><pre><span></span> &quot;C - Diamond (Elk)&quot;          : cname - name of material
+ 2                            : natoms - number of atoms
+ 1                            : etype - equation of state fit type
+ 50.0 95.0 100                : vplt1, vplt2, nvplt - start, end and #pts for fit
+ 10                           : nevpt - number of supplied points
+ 56.74525000  -75.5758514889
+ 59.58200000  -75.5933438506
+ 62.51175000  -75.6067015802
+ 65.53600000  -75.6163263051
+ 68.65625000  -75.6226219775
+ 71.87400000  -75.6259766731
+ 75.19075000  -75.6266976640
+ 78.60800000  -75.6250734731
+ 82.12725000  -75.6213749855
+ 85.75000000  -75.6158453243
+</pre></div>
+
+
+<p>(Your values might be slightly different in the last few decimals depending on
+your system.) By running the <code class="codehilite">eos</code> utility as before we get:</p>
+<div class="codehilite"><pre><span></span> V0                =            74.47144624
+ B0 (GPa)          =            469.7040543
+
+ alatt = (4*74.47144624)^(1/3) = 6.6785 Bohr (3.5341 Å)
+</pre></div>
+
+
+<p>So we see that the initial, primitive, abinit dataset is about 9 GPa off for
+the <em>Bulk modulus</em> and about 0.035 Bohr away from the correct value for the
+lattice parameter. In principle, these should be about an order of magnitude
+better, so let us see if we can make it so.</p>
+<h3 id="34-carbon-improving-the-dataset">3.4. Carbon - improving the dataset<a class="headerlink" href="#34-carbon-improving-the-dataset" title="Permanent link">&para;</a></h3>
+<p>Now that you know the target values, is up to you to experiment and see if you
+can improve this dataset. The techniques are well documented in tutorial
+<a href="../paw2">PAW2</a>. Here&rsquo;s a brief summary of main points to be concerned about:</p>
+<ul>
+<li>Use the keyword series <code class="codehilite">custom rrkj ...</code>, or <code class="codehilite">custom polynom ...</code>, or <code class="codehilite">custom polynom2 ...</code>,
+    if you want to have maximum control over the convergence properties of the projectors.</li>
+<li>Check the logarithmic derivatives very carefully for the presence of ghost states.</li>
+<li>A dataset intended for ground-state calculations needs, as a rule of thumb, at least two projectors
+    per angular momentum channel. This is because only the occupied states need to be reproduced very accurately.
+    If you need to perform calculations which involve the Fock operator or unoccupied states<ul>
+<li>like in GW calculations for instance - you will probably need at least three projectors.
+You might also want to add extra projectors in completely unoccupied <span><span class="MathJax_Preview">l</span><script type="math/tex">l</script></span>-channels.</li>
+</ul>
+</li>
+</ul>
+<p>We will now benchmark a more optimized atomic dataset for carbon.
+Try and check the convergence properties, equilibrium lattice parameter, bulk modulus,
+and bands for the input file below:</p>
+<div class="codehilite"><pre><span></span> C 6                                     ! Atomic name and number
+ LDA-PW scalarrelativistic loggrid 801 logderivrange -10 40 1000 ! XC approx., SE type, gridtype, # pts, logderiv
+ 2 2 0 0 0 0                             ! maximum n for each l: 2s,2p,0d,0f..
+ 2 1 2                                   ! Partially filled shell: 2p^2
+ 0 0 0                                   ! Stop marker
+ c                                       ! 1s - core
+ v                                       ! 2s - valence
+ v                                       ! 2p - valence
+ 1                                       ! l_max treated = 1
+ 1.3                                     ! core radius r_c
+ y                                       ! Add unocc. s-state
+ 12.2                                    !  reference energy
+ n                                       ! no more unoccupied s-states
+ y                                       ! Add unocc. p-state
+ 6.9                                     !  reference energy
+ n                                       ! no more unoccupied p-states
+ custom polynom2 7 11 vanderbiltortho sinc   ! more complicated scheme for projectors
+ 3 0 ultrasoft                           ! localisation scheme
+ 1.3                                     ! Core radius for occ. 2s state
+ 1.3                                     ! Core radius for unoocc. 2s state
+ 1.3                                     ! Core radius for occ. 2p state
+ 1.3                                     ! Core radius for unocc. 2p state
+ XMLOUT                                       ! Run atompaw2abinit converter
+ prtcorewf noxcnhat nospline noptim      ! Abinit conversion options
+ 0                                       ! Stop marker
+</pre></div>
+
+
+<p>Generate an atomic data file from this (you can replace the items in the old
+input file if you want, or make a new directory for this study). You might
+want to try and modify the gnuplot scripts so that they work correctly for
+this dataset. (The <code class="codehilite">wfn*</code> files are ordered just like the core radius list at
+the end, so now their meaning and the numbering of some other files have
+changed.) There is an example of the modifications in the plot script
+<a href="../paw3_assets/scripts/plot_C_all_II.p">plot_C_all_II.p</a>, which you
+can download and run in gnuplot. You should get a plot like this:</p>
+<p><img alt="Plot info for second Carbon dataset" src="../paw3_assets/images/plot_C_all_II.png" /></p>
+<p>Note the much better fit of the logarithmic derivatives, and the change in the
+shape of the projector functions (in blue in the <code class="codehilite">wfn</code> plots), due to the more
+complicated scheme used to optimise them.</p>
+<p>Generate the dataset like before and run the abinit <code class="codehilite">ecut</code> testing datasets in
+the <code class="codehilite">ab_C_test.in</code> abinit input file again. You should get an <code class="codehilite">etotal</code>
+convergence like this (again, the values to the left are just there to help):</p>
+<div class="codehilite"><pre><span></span>                                   etotal   (ecut)
+  etotal11 -1.0785137440E+01
+  etotal21 -1.1489028406E+01   - 703.89 mHa (10 Ha)
+  etotal31 -1.1522398057E+01   -  33.37 mHa (15 Ha)
+  etotal41 -1.1523369210E+01   -   0.97 mHa (20 Ha)
+  etotal51 -1.1523467540E+01   -   0.10 mHa (25 Ha)
+  etotal61 -1.1523515348E+01   -   0.05 mHa (30 Ha)
+  etotal71 -1.1523525440E+01   -   0.01 mHa (35 Ha)
+  etotal81 -1.1523552361E+01   -   0.03 mHa (40 Ha)
+  etotal91 -1.1523572404E+01   -   0.02 mHa (45 Ha)
+</pre></div>
+
+
+<p>This dataset already seems to be converged to about 1 mHa at an <code class="codehilite">ecut</code> of 15 Ha,
+so it is much more efficient. A comparison of bands (in units of eV) between
+datasets 32 and 92 gives:</p>
+<div class="codehilite"><pre><span></span> ...
+ #        nvals:   280
+ # average diff:     0.004312  eV
+ # minimum diff:    -0.013878  eV
+ # maximum diff:     0.000544  eV
+ ...
+</pre></div>
+
+
+<p>Which also shows a much faster convergence than before. Is the dataset
+accurate enough? Well, if you run the abinit equilibrium parameter input file
+in <code class="codehilite">ab_C_equi.in</code>, you should get data for an <code class="codehilite">eos.in</code> file:</p>
+<div class="codehilite"><pre><span></span> &quot;C - Diamond (second PAW dataset)&quot; : cname - name of material
+ 2                                  : natoms - number of atoms
+ 1                                  : etype - equation of state fit type
+ 50.0 95.0 100                      : vplt1, vplt2, nvplt - start, end and #pts for fit
+ 10                                 : nevpt - number of supplied points
+ 5.6745250E+01  -1.1471957529E+01
+ 5.9582000E+01  -1.1489599125E+01
+ 6.2511750E+01  -1.1503102315E+01
+ 6.5536000E+01  -1.1512899444E+01
+ 6.8656250E+01  -1.1519381720E+01
+ 7.1874000E+01  -1.1522903996E+01
+ 7.5190750E+01  -1.1523789014E+01
+ 7.8608000E+01  -1.1522330567E+01
+ 8.2127250E+01  -1.1518796247E+01
+ 8.5750000E+01  -1.1513430193E+01
+</pre></div>
+
+
+<p>And when fed to <code class="codehilite">eos</code>, this gives us the equilibrium data:</p>
+<div class="codehilite"><pre><span></span> V0                =            74.71100799
+ B0 (GPa)          =            465.7949258
+
+ alatt = (4*74.71100799)^(1/3) = 6.6857 Bohr (3.5379 Å)
+</pre></div>
+
+
+<p>For comparison, we list all previous values again:</p>
+<div class="codehilite"><pre><span></span> Equilibrium        Bulk modulus       lattice
+ volume, V0         B0                parameter
+ 75.5073            460.37            3.5505 Å   (first primitive PAW dataset)
+ 74.7110            465.79            3.5379 Å   (second better PAW dataset)
+ 74.4714            469.70            3.5341 Å   (Elk all-electron)
+</pre></div>
+
+
+<p>It is obvious that the second dataset is much better than the first one.
+A comparison of the most converged values for the bands using the command:</p>
+<div class="codehilite"><pre><span></span>python comp_bands_abinit2elk.py ab_C_test_o_DS92_EIG BAND.OUT align 9 4 eV
+</pre></div>
+
+
+<p>(This assumes that you have all the files you need in the current directory.)
+As before, the extra command parameters on the end mean &ldquo;align the 9-th
+k-point on the fourth band and convert values to eV&rdquo;. This will align the band
+structures at the valence band maximum. The statistics printed out at the end
+should be something like this:</p>
+<div class="codehilite"><pre><span></span> ...
+ # AVERAGES FOR OCCUPIED STATES:
+ #        nvals:   106
+ # average diff:     0.013523  eV
+ # minimum diff:    -0.001229  eV
+ # maximum diff:     0.040695  eV
+ #
+ # AVERAGES FOR UNOCCUPIED STATES:
+ #        nvals:   174
+ # average diff:     0.016247  eV
+ # minimum diff:    -0.013699  eV
+ # maximum diff:     0.117064  eV 
+ ...
+</pre></div>
+
+
+<p>Which shows a precision, on average, of slightly better than 0.01 eV for both
+the four occupied and the four lowest unoccupied bands. As before, you can
+pipe this output to a file and plot the bands for visual inspection.</p>
+<p>This is a better dataset, but probably by no means the best possible. It is
+likely that one can construct a dataset for carbon that has even better
+convergence properties, and is even more accurate. You are encouraged to
+experiment and try to make a better one.</p>
+<h2 id="4-magnesium-dealing-with-the-fermi-energy-of-a-metallic-system">4. Magnesium - dealing with the Fermi energy of a metallic system<a class="headerlink" href="#4-magnesium-dealing-with-the-fermi-energy-of-a-metallic-system" title="Permanent link">&para;</a></h2>
+<p>There is added complication if the system is metallic, and that is the
+treatment of the smearing used in order to eliminated the sharp peaks in the
+<em>density of states</em> (DOS) near the Fermi energy. The DOS is technically
+integrated over in any ground-state calculation, and for a metal this
+requires, in principle, an infinite k-point grid in order to resolve the Fermi surface.</p>
+<p>In practice, a smearing function is used so that a usually quite large - but
+finite - number of k-points will be sufficient. This smearing function has a
+certain spread controlled by a smearing parameter, and the optimum value of
+this parameter depends on the k-point grid used. As the k-point grid becomes
+denser, the optimum spread becomes smaller, and all values converge toward
+their ideal counterparts in the limit of no smearing and an infinitely dense grid.</p>
+<p>The problem is that, in ABINIT, finding the optimum smearing parameter takes a
+(potentially time consuming) convergence study. However, we are in luck. The
+elk code has an option for automatically determining the smearing parameter.
+Thus we should use the <code class="codehilite">Elk</code> code first, set a relatively dense k-mesh, and
+calculate the equilibrium bulk modulus, lattice parameter and band structure.
+Then we make sure to match the automatically determined smearing width, and
+most importantly, make sure that we match the smearing function used between
+the <code class="codehilite">Elk</code> and the abinit calculation.</p>
+<h3 id="41-magnesium-the-all-electron-calculation">4.1. Magnesium - The all-electron calculation<a class="headerlink" href="#41-magnesium-the-all-electron-calculation" title="Permanent link">&para;</a></h3>
+<p>There is an <code class="codehilite">Elk</code> input file prepared at: <a href="../paw3_assets/inputs/elk_Mg_band.in">elk_Mg_band.in</a>,
+we suggest you copy it into a subdirectory dedicated to the Mg <code class="codehilite">Elk</code> calculation (why not <code class="codehilite">Mg_elk</code>?), rename
+it to <code class="codehilite">elk.in</code> and take a look inside the input file.</p>
+<p>There will be sections familiar from before, defining the lattice vectors,
+structure, etc. (Mg has a 2-atom hexagonal unit cell.) Then there are a couple
+of new lines for the metallic case:</p>
+<div class="codehilite"><pre><span></span> ...
+ ! Metallic options
+ stype
+  0          : Smearing type 0 - Gaussian
+ autoswidth
+  .true.     : Automatic determination of swidth
+ ...
+</pre></div>
+
+
+<p>When you run <code class="codehilite">Elk</code> with this file, it will start a ground-state run (this might
+take some time due to the dense k-point mesh), all the while automatically
+determining the smearing width. At the end of the calculation the final value
+of <code class="codehilite">swidth</code> will have been determined, and can be easily extracted with a <code class="codehilite">grep</code>:</p>
+<div class="codehilite"><pre><span></span> grep &#39; smearing&#39; INFO.OUT
+</pre></div>
+
+
+<p>this should furnish you with a list:</p>
+<div class="codehilite"><pre><span></span> Automatic determination of smearing width
+ New smearing width :   0.1000000000E-02
+ New smearing width :   0.4116175210E-02
+ New smearing width :   0.4056329377E-02
+ New smearing width :   0.4060342507E-02
+ New smearing width :   0.4078123678E-02
+ New smearing width :   0.4097424577E-02
+ New smearing width :   0.4105841081E-02
+ New smearing width :   0.4109614663E-02
+ New smearing width :   0.4109651379E-02
+ New smearing width :   0.4109804149E-02
+ New smearing width :   0.4109807004E-02
+ New smearing width :   0.4109805701E-02
+ New smearing width :   0.4109804616E-02
+ New smearing width :   0.4109804468E-02
+ New smearing width :   0.4109804441E-02
+ New smearing width :   0.4109804423E-02
+</pre></div>
+
+
+<p>where the last value is the one we seek, i.e. the smearing at convergence.
+Since this <code class="codehilite">Elk</code> file will also calculate the band structure, you will have a
+<code class="codehilite">BAND.OUT</code> file at the end of this calculation to compare your ABINIT band
+structure to. There is one more thing we need to check, and that is the Fermi energy:</p>
+<div class="codehilite"><pre><span></span> grep &#39;Fermi  &#39; INFO.OUT
+
+ Fermi                       :     0.116185305134    
+ Fermi                       :     0.115496524671    
+ Fermi                       :     0.122186414492    
+ Fermi                       :     0.128341839155    
+ Fermi                       :     0.132281493053    
+ Fermi                       :     0.133819140456    
+ Fermi                       :     0.134308473303    
+ Fermi                       :     0.134328785350    
+ Fermi                       :     0.134347853104    
+ Fermi                       :     0.134347939064    
+ Fermi                       :     0.134347635069    
+ Fermi                       :     0.134347477436    
+ Fermi                       :     0.134347453635    
+ Fermi                       :     0.134347448126    
+ Fermi                       :     0.134347446032    
+ Fermi                       :     0.134347446149
+</pre></div>
+
+
+<p>The last one is the Fermi energy at convergence. We will need this later when
+we compare band structures to align the band plots at the Fermi energy.</p>
+<p>Now it&rsquo;s time to calculate the equilibrium lattice parameters. There is a
+prepared file at: <a href="../paw3_assets/inputs/elk_Mg_equi.in">elk_Mg_equi.in</a>.
+As before copy this to your directory rename it to <code class="codehilite">elk.in</code>. The layout of this file looks pretty much
+like the one before, except the band structure keywords are missing, and now
+switdth is fixed to the value we extracted before:</p>
+<div class="codehilite"><pre><span></span> ...
+ ! Metallic options
+ stype
+  0          : Smearing type 0 - Gaussian
+ swidth
+  0.4109804423E-02     : Smearing width
+ ...
+</pre></div>
+
+
+<p>To calculate the equilibrium lattice parameters, we are going to use the bulk
+modulus, which is a quantity defined with respect to a scaling of the entire
+cell (as opposed to <em>Young&rsquo;s modulus</em>, for instance, which is defined with
+respect to linear scaling along the lattice vectors). There is a handy <code class="codehilite">scale</code>
+keyword for <code class="codehilite">Elk</code>, which will accomplish this for us. If we look at the region
+where the lattice is defined:</p>
+<div class="codehilite"><pre><span></span> ...
+ ! Define lattice vectors
+ ! Magnesium has an hexagonal native structure
+ ! with a=b=3.20927 Å c=5.21033 Å  alpha=90 beta=90 gamma=60
+ ! (experimental, at 25 degrees Celsius)
+
+ ! Scale factor to be applied to all lattice vectors
+ scale
+  1.00
+
+  with
+       6.0646414   0.0000000   0.0000000
+       3.0323207   5.2521335   0.0000000
+       0.0000000   0.0000000   9.8460968
+ ...
+</pre></div>
+
+
+<p>We will here also need to perform several calculations (like we did for the
+diamond case) and we need to change the value of the <code class="codehilite">scale</code> keyword for each
+one. A good set of values would be: 0.94, 0.96, 0.98, 1.0, 1.02 1.04 and 1.06,
+i.e. a change of scale in steps of 2% with seven values in total spaced around
+the experimental equilibrium lattice structure.</p>
+<p>After each run, as before, you should collect the value of the unit cell
+volume and the total energy. After seven runs you should have a set of numbers
+which you can put in an <code class="codehilite">eos.in</code> file (depending on the system, your actual
+values may differ slightly from these):</p>
+<div class="codehilite"><pre><span></span> &quot;Mg - bulk metallic&quot;
+  2                      : natoms - number of atoms
+  1                      : etype - equation of state fit type
+  260.0 374.0 100        : vplt1, vplt2, nvplt - start, end and #pts for fit
+  7                      : nevpt - number of supplied points
+  260.4884939  -399.042203252
+  277.4716924  -399.044435776
+  295.1774734  -399.044943459
+  313.6208908  -399.043962316
+  332.8169982  -399.041812744
+  352.7808497  -399.038751783
+  373.5274988  -399.034932869
+</pre></div>
+
+
+<p>Upon using the eos utility you will get standard type of outputs in <code class="codehilite">PARAM.OUT</code>:</p>
+<div class="codehilite"><pre><span></span> Mg - bulk metallic
+
+ Universal EOS
+ Vinet P et al., J. Phys.: Condens. Matter 1, p1941 (1989)
+
+ (Default units are atomic: Hartree, Bohr etc.)
+
+  V0                =            291.6029247    
+  E0                =           -399.0449584    
+  B0                =           0.1364455738E-02
+  B0&#39;               =            4.304295809
+
+  B0 (GPa)          =            40.14366703
+</pre></div>
+
+
+<p>Now we have to translate this in terms of the lattice parameters. The
+equilibrium scale factor is given by:
+<span><span class="MathJax_Preview">scale = (\frac{V_0}{V_1})^{\frac{1}{3}} = (\frac{291.6029247}{313.6208908})^{\frac{1}{3}} = 0.9760280459</span><script type="math/tex">scale = (\frac{V_0}{V_1})^{\frac{1}{3}} = (\frac{291.6029247}{313.6208908})^{\frac{1}{3}} = 0.9760280459</script></span></p>
+<p>Where <span><span class="MathJax_Preview">V_1</span><script type="math/tex">V_1</script></span> is the volume with scale set to 1.0. Multiplying all basis vectors
+with this scale factor, we have that:</p>
+<div class="codehilite"><pre><span></span> Equilibrium        Bulk modulus       lattice
+ volume, V0         B0                parameters
+ 291.6029           40.1437            a = b = 3.1323 Å  c = 5.0854 Å
+</pre></div>
+
+
+<p>Now we have all the information needed to proceed with the abinit calculation.</p>
+<h3 id="42-magnesium-the-abinit-calculation">4.2. Magnesium - The abinit calculation<a class="headerlink" href="#42-magnesium-the-abinit-calculation" title="Permanent link">&para;</a></h3>
+<p>As usual, it&rsquo;s best to prepare a separate subdirectory for the atomic data and
+the ABINIT test. We will assume that the subdirectories have been created as:</p>
+<div class="codehilite"><pre><span></span> mkdir Mg_atompaw
+ mkdir Mg_atompaw/abinit_test
+ mkdir Mg_atompaw/abinit_test/outputs
+</pre></div>
+
+
+<p>and that your current directory is <code class="codehilite">./Mg_atompaw</code>. For the Mg <code class="codehilite">ATOMPAW</code> input,
+create a file <code class="codehilite">Mg.input</code> with the following content:</p>
+<div class="codehilite"><pre><span></span> Mg 12
+ LDA-PW scalarrelativistic loggrid 801 40. logderivrange -10 40 1000
+ 3 3 0 0 0 0
+ 3 1 0
+ 0 0 0
+ c
+ v
+ v
+ v
+ v
+ 1
+ 1.9
+ n
+ n
+ custom polynom2 7 11 vanderbiltortho sincshape
+ 2 0 ultrasoft
+ 1.9
+ 1.9
+ 1.9
+ 1.9
+ XMLOUT
+ prtcorewf noxcnhat nospline noptim
+ 0
+</pre></div>
+
+
+<p>Note that there are not really many projectors in this dataset, only two
+per angular momentum channel. It should be possible to make this much better
+adding extra projectors, and maybe even unoccupied <span><span class="MathJax_Preview">d</span><script type="math/tex">d</script></span>-states. If you run
+atompaw with this, you can have a look with the bundled <code class="codehilite">plot_MG_all.p</code> file
+and others like it to get a feel for the quality of this dataset.</p>
+<p>Generate the abinit dataset file, and make sure it&rsquo;s given as:
+<code class="codehilite">./Mg_atompaw/Mg_LDA-PW-paw.xml</code>, then go to the subdirectory for the ABINIT test,
+and copy these files to it: <a href="../paw3_assets/inputs/ab_Mg_test.in">ab_Mg_test.in</a>,
+and <a href="../paw3_assets/inputs/ab_Mg_equi.in">ab_Mg_equi.in</a>. 
+The file for testing the convergence has already been set up so that the smearing
+strategy is equivalent to the <code class="codehilite">Elk</code> one, as evidenced by the lines:</p>
+<div class="codehilite"><pre><span></span> ...
+ # Parameters for metals
+ tsmear 0.4109804423E-02
+ occopt 7
+ ...
+</pre></div>
+
+
+<p>inside it. The <code class="codehilite">occopt 7</code> input variable corresponds exactly to the Gaussian
+smearing which is the default for the <code class="codehilite">Elk</code> code. (In fact it is the 0<sup>th</sup> order
+Methfessel-Paxton expression <a class="wikilink citation-wikilink" data-content="High-precision sampling for Brillouin-zone integration in metals" data-placement="auto right" data-toggle="popover" data-trigger="hover focus" href="../../theory/bibliography#methfessel1989">[Methfessel1989]</a>, for other
+possibilities compare the entries for the keyword <code class="codehilite">stype</code> in the <code class="codehilite">Elk</code> manual
+and the entries for <code class="codehilite">occopt</code> in ABINIT).</p>
+<p>Now run the test input file (if your computer has several cores, you might
+want to take advantage of that and run abinit in parallel). The test suite can
+take some time to complete, because of the dense <em>k-point mesh sampling</em>. Make
+sure you pipe the screen to a log file: <code class="codehilite">log_Mg_test</code></p>
+<p>When the run is finished, we can check the convergence properties as before,
+and we that an <code class="codehilite">ecut</code> of 15 Ha is definitely enough. The interesting thing will
+now be to compare the band structures. First we need to check the Fermi energy
+of the abinit calculation, if you do a <code class="codehilite">grep</code>:</p>
+<div class="codehilite"><pre><span></span> grep &#39; Fermi&#39; log_Mg_test
+</pre></div>
+
+
+<p>you will see a long list of Fermi energies, one for each iteration, finally
+converging towards one number:</p>
+<div class="codehilite"><pre><span></span> ...
+ newocc : new Fermi energy is       0.137605 , with nelect=     20.000000
+ newocc : new Fermi energy is       0.137605 , with nelect=     20.000000
+ newocc : new Fermi energy is       0.137605 , with nelect=     20.000000
+</pre></div>
+
+
+<p>The last one of these is the final <em>Fermi energy</em> of the ABINIT calculation. The
+<code class="codehilite">abinit2elk</code> band comparison <em>script</em> can now be given the <em>Fermi energies</em> of the
+two different calculations and align band structures there. Copy the
+<code class="codehilite">BAND.OUT</code> file from the <code class="codehilite">Elk</code> calculation to the current directory, as well as
+the band comparison script <code class="codehilite">comp_bands_abinit2elk.py</code>. This script can also be
+used to align the bands at different Fermi energies. However, in the
+<code class="codehilite">BAND.OUT</code> file from <code class="codehilite">Elk</code>, the bands are already shifted so that the Fermi
+energy is at zero, so it is only the alignment of the abinit file that is required:</p>
+<div class="codehilite"><pre><span></span> python comp_bands_abinit2elk.py ./outputs/ab_Mg_test_o_DS32_EIG BAND.OUT Fermi 0.137605 0.0 eV
+</pre></div>
+
+
+<p>Issuing this command will provide the final lines:</p>
+<div class="codehilite"><pre><span></span> ...
+ #        nvals:   940
+ # average diff:     0.029652  eV
+ # minimum diff:    -0.036252  eV
+ # maximum diff:     0.215973  eV
+ ...
+</pre></div>
+
+
+<p>Which means that we are on average accurate to about 0.03 eV. If you pipe the
+output to a file <code class="codehilite">bands_abinit_elk.dat</code>, and go into gnuplot and use the script <code class="codehilite">plot_Mg_bands.p</code>:</p>
+<div class="codehilite"><pre><span></span> gnuplot&gt; load &#39;plot_Mg_bands.p&#39;
+</pre></div>
+
+
+<p>You should get a plot that looks something like this:</p>
+<p><img alt="Comparison of Mg abinit and Elk bands alignet at Fermi level" src="../paw3_assets/images/band_abinit_elk_III.png" /></p>
+<p>As we can see, the bands should fit quite well. Finally, for the structural, a
+run of the <code class="codehilite">ab_Mg_equi.in</code> file gives us all the information we need for the
+creation of an <code class="codehilite">eos.in</code> file:</p>
+<div class="codehilite"><pre><span></span> &quot;Mg - bulk metallic (ABINIT)&quot;
+  2                      : natoms - number of atoms
+  1                      : etype - equation of state fit type
+  260.0 380.0 100        : vplt1, vplt2, nvplt - start, end and #pts for fit
+  7                      : nevpt - number of supplied points
+  2.6048849E+02  -1.2697509579E+02
+  2.7747169E+02  -1.2697742149E+02
+  2.9517747E+02  -1.2697801365E+02
+  3.1362089E+02  -1.2697716194E+02
+  3.3281700E+02  -1.2697512888E+02
+  3.5278085E+02  -1.2697212368E+02
+  3.7352750E+02  -1.2696833809E+02
+</pre></div>
+
+
+<p>When the eos utility is run, we get the equilibrium volume and Bulk modulus:</p>
+<div class="codehilite"><pre><span></span> ...
+ V0                =            293.0281803
+ ...
+ B0 (GPa)          =            39.19118222
+</pre></div>
+
+
+<p>Converting this to lattice parameters as before, we can compare this with the <code class="codehilite">Elk</code> run:</p>
+<div class="codehilite"><pre><span></span> Equilibrium        Bulk modulus       lattice
+ volume, V0         B0                parameters
+ 291.6029           40.1437        a = b = 3.1323 Å  c = 5.0854 Å  (Elk)
+ 293.0282           39.1912        a = b = 3.1374 Å  c = 5.0937 Å  (ABINIT)
+</pre></div>
+
+
+<p>Which is very close.</p>
+<p>Again, this is a decent dataset for ground-state calculations, but it can
+probably be made even better. You are encouraged to try and do this.</p>
+<h2 id="5-paw-datasets-for-gw-calculations">5. PAW datasets for GW calculations<a class="headerlink" href="#5-paw-datasets-for-gw-calculations" title="Permanent link">&para;</a></h2>
+<p>There are a number of issues to consider when making datasets for GW
+calculations, here is a list of a few:</p>
+<ul>
+<li>
+<p>Care needs to be taken so that the logarithmic derivatives match for much higher energies
+    than for ground-state calculations. They should at least match well up to the energy of
+    the unoccupied states used in the calculation. The easiest way of ensuring this is increasing
+    the number of projectors per state.</p>
+</li>
+<li>
+<p>The on-site basis needs to be of higher quality to minimise truncation error due to the finite number
+    of on-site basis functions (projectors). Again, this requires more projectors per angular momentum channel.</p>
+</li>
+<li>
+<p>As a rule of thumb, a PAW dataset for GW should have at least three projectors per state, if not more.</p>
+</li>
+<li>
+<p>A particularly sensitive thing is the quality of the expansion of the pseudised plane-wave part in terms of the on-site basis.
+     This can be checked by using the density of states (DOS), as described in the <a href="../paw1">first PAW tutorial</a>.</p>
+</li>
+</ul>
+                
+                  
+                
+              
+
+<!-- 
+add dropdown button with toolbar (based on https://bootsnipp.com/snippets/featured/inbox-by-gmail)
+and return to Top button (based on https://codepen.io/rdallaire/pen/apoyx)
+-->
+<div class="md-container">
+  <div class="row">
+    <div id="inbox">
+      <div class="fab btn-group show-on-hover dropup">
+        <div data-toggle="tooltip" data-placement="left" title="Menu" style="margin-left: 42px;">
+          <button id="return-to-top" type="button" class="btn btn-primary btn-io dropdown-toggle" data-toggle="dropdown">
+            <span class="fa-stack fa-2x">
+                <i class="fa fa-circle fa-stack-2x fab-backdrop"></i>
+                <i class="fa fa-chevron-up fa-stack-1x fa-inverse fab-primary"></i>
+                <i class="fa fa-map-signs fa-stack-1x fa-inverse fab-secondary"></i>
+            </span>
+          </button>
+        </div>
+        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+        
+        
+          <li><a href="../../about/release-notes/" data-toggle="tooltip" data-placement="left" 
+                  title="About"><i class="fa fa-info-circle"></i></a></li>
+        
+          <li><a href="../../developers/git_and_gitlab/" data-toggle="tooltip" data-placement="left" 
+                  title="Developers"><i class="fa fa-terminal"></i></a></li>
+        
+          <li><a href="../../theory/geometry/" data-toggle="tooltip" data-placement="left" 
+                  title="Theory"><i class="fa fa-book"></i></a></li>
+        
+          <li><a href="../" data-toggle="tooltip" data-placement="left" 
+                  title="Tutorial"><i class="fa fa-graduation-cap"></i></a></li>
+        
+          <li><a href="../../variables/" data-toggle="tooltip" data-placement="left" 
+                  title="Variables"><i class="fa fa-file-text-o"></i></a></li>
+        
+          <li><a href="../../topics/features/" data-toggle="tooltip" data-placement="left" 
+                  title="Topics"><i class="fa fa-question"></i></a></li>
+        
+          <li><a href="../.." data-toggle="tooltip" data-placement="left" 
+                  title="User Guide"><i class="fa fa-user-circle-o"></i></a></li>
+        
+        <!--
+        Example: 
+        <li><a href="/index.html" data-toggle="tooltip" data-placement="left" title="User-Guide">
+              <i class="fa fa-user-circle-o"></i></a></li>
+        -->
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+              
+                
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+    <!-- Add tabs to footer -->
+    
+        
+
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../.." title="User Guide" class="md-tabs__link">
+          User Guide
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../topics/features/" title="Topics" class="md-tabs__link">
+          Topics
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../variables/" title="Variables" class="md-tabs__link">
+          Variables
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../" title="Tutorial" class="md-tabs__link md-tabs__link--active">
+          Tutorial
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../theory/geometry/" title="Theory" class="md-tabs__link">
+          Theory
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../developers/git_and_gitlab/" title="Developers" class="md-tabs__link">
+          Developers
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../about/release-notes/" title="About" class="md-tabs__link">
+          About
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+    
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../paw2/" title="PAW2" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                PAW2
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../dftu/" title="Dftu" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Dftu
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+            <center>Abinit version 9.2.2</center>
+        
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2020-2021 The Abinit Group (MS, MT)
+          </div>
+        
+        powered by
+        <a href="http://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+  <div class="md-footer-social">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+      <a href="https://github.com/abinit/abinit" class="md-footer-social__link fa fa-github-alt"></a>
+    
+      <a href="https://twitter.com/hashtag/abinit" class="md-footer-social__link fa fa-twitter"></a>
+    
+      <a href="http://www.facebook.com/abinit.org" class="md-footer-social__link fa fa-facebook"></a>
+    
+      <a href="https://www.youtube.com/watch?v=gcbfb_Mteo4" class="md-footer-social__link fa fa-youtube"></a>
+    
+  </div>
+
+      
+    </div>
+  </div>
+</footer>
+      
+
+    </div>
+    
+      <script src="../../assets/javascripts/application.02434462.js"></script>
+      
+      <script>app.initialize({version:"0.17.5",url:{base:"../.."}})</script>
+      
+        <script src="../../extra_javascript/jquery.dialogextend.min.js"></script>
+      
+        <script src="../../extra_javascript/abidocs.js"></script>
+      
+    
+    
+      
+        <script>!function(e,a,t,n,o,c,i){e.GoogleAnalyticsObject=o,e.ga=e.ga||function(){(e.ga.q=e.ga.q||[]).push(arguments)},e.ga.l=1*new Date,c=a.createElement(t),i=a.getElementsByTagName(t)[0],c.async=1,c.src="https://www.google-analytics.com/analytics.js",i.parentNode.insertBefore(c,i)}(window,document,"script",0,"ga"),ga("create","UA-116681470-1","docs.abinit.org"),ga("set","anonymizeIp",!0),ga("send","pageview");var links=document.getElementsByTagName("a");if(Array.prototype.map.call(links,function(e){e.host!=document.location.host&&e.addEventListener("click",function(){var a=e.getAttribute("data-md-action")||"follow";ga("send","event","outbound",a,e.href)})}),document.forms.search){var query=document.forms.search.query;query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}</script>
+      
+    
+  </body>
+</html>
